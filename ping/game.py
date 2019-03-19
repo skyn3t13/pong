@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from bat import Bat
 
+
 class Game:
 
     SCREEN_HEIGHT = 600
@@ -10,18 +11,17 @@ class Game:
     BAT_WIDTH = 10
     BAT_HEIGHT = 100
 
-
     def __init__(self):
 
         pygame.init()
         self.running = True
         self.clock = pygame.time.Clock()
-        self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT))
+        self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
+                                               Game.SCREEN_HEIGHT))
         self.bats = Bat(Game.SCREEN_WIDTH,
                         Game.SCREEN_HEIGHT,
                         Game.BAT_WIDTH,
                         Game.BAT_HEIGHT)
-
 
     def game_loop(self):
 
@@ -30,7 +30,7 @@ class Game:
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         self.running = False
-        
+
             self.screen.fill((0, 0, 0))
             pygame.draw.rect(self.screen, self.COLOUR, self.bats.left_bat)
             pygame.draw.rect(self.screen, self.COLOUR, self.bats.right_bat)
