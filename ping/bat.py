@@ -1,5 +1,6 @@
 import pygame
 
+
 class Bat:
     def __init__(self, screen_width, screen_height, bat_width, bat_height):
         self.left_bat = pygame.Rect(0,
