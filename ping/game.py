@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from bat import Bat
+from ping.bat import Bat
 
 
 class Game:
