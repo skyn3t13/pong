@@ -1,4 +1,5 @@
 import pygame
+import random
 from pygame.locals import *
 from ping.bat import Bat
 from ping.ball import Ball
@@ -76,6 +77,24 @@ class Game:
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
+
+
+            NPC_UP = random.choice([False, True])
+            NPC_DOWN = random.choice([False, True])
+            CHANCE = random.randrange(1, 100, 1) # second value sets probability
+
+            if NPC_UP:
+                if CHANCE > 50:
+                    (self.right_bat.rect.y) = (self.ball.rect.top) 
+                else:
+                    (self.right_bat.rect.y) = (self.ball.rect.top) - self.right_bat.rect.height
+                
+            if NPC_DOWN:
+                if CHANCE > 50:
+                    (self.right_bat.rect.y) = (self.ball.rect.top) 
+                else:
+                    (self.right_bat.rect.y) = (self.ball.rect.top) - self.right_bat.rect.height
+
             pygame.display.flip()
 
 
