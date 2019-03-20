@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 pygame = "*"
 pytest = "*"
+pyautogui = "*"
 
 [requires]
 python_version = "3.7"

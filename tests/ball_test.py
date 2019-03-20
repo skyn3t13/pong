@@ -20,3 +20,9 @@ def test_reverse_vertical_direction():
     speed = ball.y_speed
     ball.reverse_vertical_direction()
     assert ball.y_speed == -speed
+
+def test_reverse_horizontal_direction():
+    ball = Ball()
+    speed = ball.x_speed
+    ball.reverse_horizontal_direction()
+    assert ball.x_speed == -speed
