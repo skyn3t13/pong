@@ -11,6 +11,7 @@ def test_ball_is_drawn():
     game = Game()
     assert repr(game.ball.rect) == '<rect(400, 300, 25, 25)>'
 
+
 def test_ball_moves_from_starting_position():
     game = Game()
     game.game_loop()
