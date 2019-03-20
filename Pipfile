@@ -9,6 +9,7 @@ pep8 = "*"
 [packages]
 pygame = "*"
 pytest = "*"
+pyautogui = "*"
 
 [requires]
 python_version = "3.7"
