@@ -18,10 +18,14 @@ class Game:
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
                                                Game.SCREEN_HEIGHT))
-        self.bats = Bat(Game.SCREEN_WIDTH,
+        self.left_bat = Bat(Game.SCREEN_WIDTH,
                         Game.SCREEN_HEIGHT,
                         Game.BAT_WIDTH,
-                        Game.BAT_HEIGHT)
+                        Game.BAT_HEIGHT, 0, Game.SCREEN_HEIGHT/2)
+        self.right_bat = Bat(Game.SCREEN_WIDTH,
+                        Game.SCREEN_HEIGHT,
+                        Game.BAT_WIDTH,
+                        Game.BAT_HEIGHT, Game.SCREEN_WIDTH - Game.BAT_WIDTH, Game.SCREEN_HEIGHT / 2)
         self.ball = ball
         self.ball.rect.y = self.SCREEN_HEIGHT / 2
         self.ball.rect.x = self.SCREEN_WIDTH / 2
@@ -37,13 +41,17 @@ class Game:
                         self.running = False
 
             self.screen.fill((0, 0, 0))
-            pygame.draw.rect(self.screen, self.COLOUR, self.bats.left_bat)
-            pygame.draw.rect(self.screen, self.COLOUR, self.bats.right_bat)
+            # print("Left: " + repr(self.bat.rect.x))
+            # print("Right: " + repr(self.right_bat.rect.x))
+
+
             self.clock.tick(60)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update()
             self.screen.blit(self.background, (0, 0))
             self.screen.blit(self.ball.surf, self.ball.rect)
+            self.screen.blit(self.left_bat.surf, self.left_bat.rect)
+            self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             pygame.display.flip()
 
 
