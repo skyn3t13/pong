@@ -49,13 +49,19 @@ class Game:
             self.right_bat.move_up(Game.BAT_MOVE)
         if keys_pressed[self.right_player.key_down]:
             self.right_bat.move_down(Game.BAT_MOVE)
-    
-    def check_ball_hits_bat(self):
-            if self.ball.rect.colliderect(self.left_bat):
-                self.ball.reverse_horizontal_direction()
-            if self.ball.rect.colliderect(self.right_bat):
-                self.ball.reverse_horizontal_direction()
 
+    def check_ball_hits_bat(self):
+        if self.ball.rect.colliderect(self.left_bat):
+            self.ball.reverse_horizontal_direction()
+        if self.ball.rect.colliderect(self.right_bat):
+            self.ball.reverse_horizontal_direction()
+
+    def output_data(self):
+        output = {"l": self.left_bat.rect.y,
+                  "r": self.right_bat.rect.y,
+                  "bx": self.ball.rect.x,
+                  "by": self.ball.rect.y}
+        return output
 
     def game_loop(self):
         self.rect = self.screen.get_rect()
@@ -76,6 +82,7 @@ class Game:
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
+            print(self.output_data())
             pygame.display.flip()
 
 
