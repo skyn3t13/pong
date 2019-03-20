@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
-from bat import Bat
-from ball import Ball
-from player import Player
+from ping.bat import Bat
+from ping.ball import Ball
+from ping.player import Player
 
 class Game:
 
