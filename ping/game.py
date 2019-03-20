@@ -7,28 +7,32 @@ class Game:
 
     SCREEN_HEIGHT = 600
     SCREEN_WIDTH = 800
-    COLOUR = (255, 255, 255)
     BAT_WIDTH = 10
     BAT_HEIGHT = 100
+    Y_MIDDLE_SCREEN = SCREEN_HEIGHT / 2
+    X_MIDDLE_SCREEN = SCREEN_WIDTH / 2
+    RIGHT_BAT_X_POSITION = SCREEN_WIDTH - BAT_WIDTH
 
-    def __init__(self, ball = Ball()):
+    def __init__(self, ball=Ball()):
 
         pygame.init()
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
                                                Game.SCREEN_HEIGHT))
-        self.left_bat = Bat(Game.SCREEN_WIDTH,
-                        Game.SCREEN_HEIGHT,
-                        Game.BAT_WIDTH,
-                        Game.BAT_HEIGHT, 0, Game.SCREEN_HEIGHT/2)
-        self.right_bat = Bat(Game.SCREEN_WIDTH,
-                        Game.SCREEN_HEIGHT,
-                        Game.BAT_WIDTH,
-                        Game.BAT_HEIGHT, Game.SCREEN_WIDTH - Game.BAT_WIDTH, Game.SCREEN_HEIGHT / 2)
-        self.ball = ball
-        self.ball.rect.y = self.SCREEN_HEIGHT / 2
-        self.ball.rect.x = self.SCREEN_WIDTH / 2
+        self.left_bat = Bat(Game.SCREEN_HEIGHT,
+                            Game.BAT_WIDTH,
+                            Game.BAT_HEIGHT,
+                            0,
+                            Game.Y_MIDDLE_SCREEN)
+        self.right_bat = Bat(Game.SCREEN_HEIGHT,
+                             Game.BAT_WIDTH,
+                             Game.BAT_HEIGHT,
+                             Game.RIGHT_BAT_X_POSITION,
+                             Game.Y_MIDDLE_SCREEN)
+        self.ball = ball           
+        self.ball.rect.y = Game.Y_MIDDLE_SCREEN
+        self.ball.rect.x = Game.X_MIDDLE_SCREEN
         self.background = pygame.Surface(self.screen.get_size())
 
     def game_loop(self):
@@ -41,10 +45,6 @@ class Game:
                         self.running = False
 
             self.screen.fill((0, 0, 0))
-            # print("Left: " + repr(self.bat.rect.x))
-            # print("Right: " + repr(self.right_bat.rect.x))
-
-
             self.clock.tick(60)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update()
