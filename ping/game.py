@@ -67,6 +67,8 @@ class Game:
                     if event.key == K_ESCAPE:
                         self.running = False
 
+            if self.ball.reset:
+                self.ball.reset_ball()
             self.screen.fill((0, 0, 0))
             self.clock.tick(60)
             self.ball.rect.move_ip(self.ball.speed)
@@ -80,6 +82,7 @@ class Game:
             pygame.display.flip()
             print(self.ball.speed)
             print(self.score)
+            print(repr(self.ball.surf))
 
 
 if __name__ == "__main__":

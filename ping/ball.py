@@ -5,25 +5,28 @@ class Ball(pygame.sprite.Sprite):
     def __init__(self, y_middle, x_middle):
         super(Ball, self).__init__()
         self.surf = pygame.Surface((25, 25))
-        self.surf.fill((255, 255, 255))
+        self.set_white()
         self.rect = self.surf.get_rect()
         self.speed = 0
         self.set_ball_speed()
         self.y_middle = y_middle
         self.x_middle = x_middle
+        self.reset = False
 
     def update(self, score, *args):
         if self.rect.left < 0:
             self.rect.left = 0
             self.stop_ball()
             score["p2"] += 1
-            self.reset_ball()
+            self.set_black()
+            self.reset = True
 
         if self.rect.right > 800:
             self.rect.right = 800
             self.stop_ball()
             score["p1"] += 1
-            self.reset_ball()
+            self.set_black()
+            self.reset = True
 
         if self.rect.top <= 0:
             self.rect.top = 0
@@ -50,5 +53,13 @@ class Ball(pygame.sprite.Sprite):
         self.set_ball_speed(10, 0)
         self.rect.y = self.y_middle
         self.rect.x = self.x_middle
+        self.set_white()
+        self.reset = False
+
+    def set_black(self):
+        self.surf.fill((0, 0, 0))
+
+    def set_white(self):
+        self.surf.fill((255, 255, 255))
 
 
