@@ -15,7 +15,7 @@ class Game:
     X_MIDDLE_SCREEN = SCREEN_WIDTH / 2
     RIGHT_BAT_X_POSITION = SCREEN_WIDTH - BAT_WIDTH
 
-    def __init__(self, ball=Ball()):
+    def __init__(self, ball=Ball(Y_MIDDLE_SCREEN, X_MIDDLE_SCREEN)):
 
         pygame.init()
         self.running = True
@@ -38,6 +38,7 @@ class Game:
         self.ball.rect.y = Game.Y_MIDDLE_SCREEN
         self.ball.rect.x = Game.X_MIDDLE_SCREEN
         self.background = pygame.Surface(self.screen.get_size())
+        self.score = {"p1": 0, "p2": 0}
 
     def check_bat_move(self):
         keys_pressed = pygame.key.get_pressed()
@@ -69,7 +70,7 @@ class Game:
             self.screen.fill((0, 0, 0))
             self.clock.tick(60)
             self.ball.rect.move_ip(self.ball.speed)
-            self.ball.update()
+            self.ball.update(self.score)
             self.screen.blit(self.background, (0, 0))
             self.screen.blit(self.ball.surf, self.ball.rect)
             self.screen.blit(self.left_bat.surf, self.left_bat.rect)
@@ -77,6 +78,8 @@ class Game:
             self.check_bat_move()
             self.check_ball_hits_bat()
             pygame.display.flip()
+            print(self.ball.speed)
+            print(self.score)
 
 
 if __name__ == "__main__":

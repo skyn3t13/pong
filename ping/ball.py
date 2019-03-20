@@ -1,33 +1,54 @@
 import pygame
+import time
 
 class Ball(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, y_middle, x_middle):
         super(Ball, self).__init__()
         self.surf = pygame.Surface((25, 25))
         self.surf.fill((255, 255, 255))
         self.rect = self.surf.get_rect()
-        self.x_speed = -4
-        self.y_speed = -10
-        self.speed = (self.x_speed, self.y_speed)
+        self.speed = 0
+        self.set_ball_speed()
+        self.y_middle = y_middle
+        self.x_middle = x_middle
 
-    def update(self, *args):
-        # if self.rect.left < 0:
-        #     self.rect.left = 0
-        #     self.reverse_horizontal_direction()
-        # elif self.rect.right > 800:
-        #     self.rect.right = 800
-        #     self.reverse_horizontal_direction()
+    def update(self, score, *args):
+        if self.rect.left < 0:
+            self.rect.left = 0
+            self.stop_ball()
+            score["p2"] += 1
+            self.reset_ball()
+
+        if self.rect.right > 800:
+            self.rect.right = 800
+            self.stop_ball()
+            score["p1"] += 1
+            self.reset_ball()
+
         if self.rect.top <= 0:
             self.rect.top = 0
             self.reverse_vertical_direction()
-        elif self.rect.bottom >= 600:
+
+        if self.rect.bottom >= 600:
             self.rect.bottom = 600
             self.reverse_vertical_direction()
 
     def reverse_vertical_direction(self):
-        self.y_speed = self.y_speed * -1
-        self.speed = (self.x_speed, self.y_speed)
+        self.speed = (self.speed[0], self.speed[1] * -1)
 
     def reverse_horizontal_direction(self):
-        self.x_speed = self.x_speed * -1
-        self.speed = (self.x_speed, self.y_speed)
+        self.speed = (self.speed[0] * -1, self.speed[1])
+
+    def stop_ball(self):
+        self.set_ball_speed(0, 0)
+
+    def set_ball_speed(self, x_speed=10, y_speed=0):
+        self.speed = (x_speed, y_speed)
+
+    def reset_ball(self):
+        time.sleep(1)
+        self.set_ball_speed(10, 0)
+        self.rect.y = self.y_middle
+        self.rect.x = self.x_middle
+
+
