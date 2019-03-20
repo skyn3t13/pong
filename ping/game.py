@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from ping.bat import Bat
 from ping.ball import Ball
+from ping.player import Player
 
 class Game:
 
@@ -9,6 +10,7 @@ class Game:
     SCREEN_WIDTH = 800
     BAT_WIDTH = 10
     BAT_HEIGHT = 100
+    BAT_MOVE = 10
     Y_MIDDLE_SCREEN = SCREEN_HEIGHT / 2
     X_MIDDLE_SCREEN = SCREEN_WIDTH / 2
     RIGHT_BAT_X_POSITION = SCREEN_WIDTH - BAT_WIDTH
@@ -25,15 +27,35 @@ class Game:
                             Game.BAT_HEIGHT,
                             0,
                             Game.Y_MIDDLE_SCREEN)
+        self.left_player = Player(pygame.K_w, pygame.K_s)
         self.right_bat = Bat(Game.SCREEN_HEIGHT,
                              Game.BAT_WIDTH,
                              Game.BAT_HEIGHT,
                              Game.RIGHT_BAT_X_POSITION,
                              Game.Y_MIDDLE_SCREEN)
+        self.right_player = Player(pygame.K_UP, pygame.K_DOWN)
         self.ball = ball           
         self.ball.rect.y = Game.Y_MIDDLE_SCREEN
         self.ball.rect.x = Game.X_MIDDLE_SCREEN
         self.background = pygame.Surface(self.screen.get_size())
+
+    def check_bat_move(self):
+        keys_pressed = pygame.key.get_pressed()
+        if keys_pressed[self.left_player.key_up]:
+            self.left_bat.move_up(Game.BAT_MOVE)
+        if keys_pressed[self.left_player.key_down]:
+            self.left_bat.move_down(Game.BAT_MOVE)
+        if keys_pressed[self.right_player.key_up]:
+            self.right_bat.move_up(Game.BAT_MOVE)
+        if keys_pressed[self.right_player.key_down]:
+            self.right_bat.move_down(Game.BAT_MOVE)
+    
+    def check_ball_hits_bat(self):
+            if self.ball.rect.colliderect(self.left_bat):
+                self.ball.reverse_horizontal_direction()
+            if self.ball.rect.colliderect(self.right_bat):
+                self.ball.reverse_horizontal_direction()
+
 
     def game_loop(self):
         self.rect = self.screen.get_rect()
@@ -52,6 +74,8 @@ class Game:
             self.screen.blit(self.ball.surf, self.ball.rect)
             self.screen.blit(self.left_bat.surf, self.left_bat.rect)
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
+            self.check_bat_move()
+            self.check_ball_hits_bat()
             pygame.display.flip()
 
 

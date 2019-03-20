@@ -11,12 +11,12 @@ class Ball(pygame.sprite.Sprite):
         self.speed = (self.x_speed, self.y_speed)
 
     def update(self, *args):
-        if self.rect.left < 0:
-            self.rect.left = 0
-            self.reverse_horizontal_direction()
-        elif self.rect.right > 800:
-            self.rect.right = 800
-            self.reverse_horizontal_direction()
+        # if self.rect.left < 0:
+        #     self.rect.left = 0
+        #     self.reverse_horizontal_direction()
+        # elif self.rect.right > 800:
+        #     self.rect.right = 800
+        #     self.reverse_horizontal_direction()
         if self.rect.top <= 0:
             self.rect.top = 0
             self.reverse_vertical_direction()
