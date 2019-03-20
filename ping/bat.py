@@ -1,23 +1,22 @@
 import pygame
 
 
-class Bat:
-    def __init__(self, screen_width, screen_height, bat_width, bat_height):
-        self.left_bat = pygame.Rect(0,
-                                    screen_height / 2 - bat_height / 2,
-                                    bat_width,
-                                    bat_height)
-        self.right_bat = pygame.Rect(screen_width - bat_width,
-                                     screen_height / 2 - bat_height / 2,
-                                     bat_width,
-                                     bat_height)
+class Bat(pygame.sprite.Sprite):
+    def __init__(self, screen_width, screen_height, bat_width, bat_height, x, y):
+        self.surf = pygame.Surface((bat_width, bat_height))
+        self.surf.fill((255, 255, 255))
+        self.rect = self.surf.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.bat_width = bat_width
+        self.bat_height = bat_height
 
-    def move_up(self, side, screen_height, bat_height, move_distance):
-        bat = self.left_bat if side == 'left' else self.right_bat
-        if bat.y - move_distance > 0:
-            bat.y -= move_distance
+    def move_up(self, move_distance):
+        if self.rect.y - move_distance > 0:
+            self.rect.y -= move_distance
 
-    def move_down(self, side, screen_height, bat_height, move_distance):
-        bat = self.left_bat if side == 'left' else self.right_bat
-        if bat.y + move_distance < screen_height - bat_height:
-            bat.y += move_distance
+    def move_down(self, move_distance):
+        if self.rect.y + move_distance < self.screen_height - self.bat_height:
+            self.rect.y += move_distance
