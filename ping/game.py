@@ -23,8 +23,8 @@ class Game:
                         Game.BAT_WIDTH,
                         Game.BAT_HEIGHT)
         self.ball = ball
-        self.ball.rect.y = self.HEIGHT / 2
-        self.ball.rect.x = self.WIDTH / 2
+        self.ball.rect.y = self.SCREEN_HEIGHT / 2
+        self.ball.rect.x = self.SCREEN_WIDTH / 2
         self.background = pygame.Surface(self.screen.get_size())
 
     def game_loop(self):
