@@ -57,6 +57,18 @@ class Game:
             if self.ball.rect.colliderect(self.right_bat):
                 self.ball.reverse_horizontal_direction()
 
+    def npc_player(self):
+        print(self.ball.rect.x)
+        CHANCE = random.randrange(1, 100, 1) # start/stop/step
+        if CHANCE < 99 and self.ball.rect.x >= 600:
+            (self.right_bat.rect.y) = (self.ball.rect.top) # follow bat       
+        elif self.ball.rect.x >= 600:
+            (self.right_bat.rect.y) = (self.ball.rect.top) - self.right_bat.rect.height # miss bat by 1 bat height 
+        if CHANCE < 99 and self.ball.rect.x >= 600:
+            (self.right_bat.rect.y) = (self.ball.rect.top) 
+        elif self.ball.rect.x >= 600:
+            (self.right_bat.rect.y) = (self.ball.rect.top) - self.right_bat.rect.height
+
 
     def game_loop(self):
         self.rect = self.screen.get_rect()
@@ -77,19 +89,8 @@ class Game:
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
+            self.npc_player()
 
-            CHANCE = random.randrange(1, 100, 1) # start/stop/step
-
-            if CHANCE < 99:
-                (self.right_bat.rect.y) = (self.ball.rect.top) # follow bat
-                
-            else:
-                (self.right_bat.rect.y) = (self.ball.rect.top) - self.right_bat.rect.height # miss bat by 1 bat height
-            
-            if CHANCE < 99:
-                (self.right_bat.rect.y) = (self.ball.rect.top) 
-            else:
-                (self.right_bat.rect.y) = (self.ball.rect.top) - self.right_bat.rect.height
 
             pygame.display.flip()
 
