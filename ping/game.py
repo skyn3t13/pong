@@ -94,9 +94,7 @@ class Game:
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
-            # print(self.output_data().values())
-            # print(self.prepare_data(self.output_data()))
-            # print(self.prepare_data(self.output_data()))
+            print(self.prepare_data(self.output_data()))
             pygame.display.flip()
 
 if __name__ == "__main__":
