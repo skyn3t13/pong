@@ -61,7 +61,8 @@ class Game:
         output = {"l": self.left_bat.rect.y,
                   "r": self.right_bat.rect.y,
                   "bx": self.ball.rect.x,
-                  "by": self.ball.rect.y}
+                  "by": self.ball.rect.y,
+                  "score": self.score}
         return output
 
     def game_loop(self):
@@ -87,10 +88,6 @@ class Game:
             self.check_ball_hits_bat()
             print(self.output_data())
             pygame.display.flip()
-            print(self.ball.speed)
-            print(self.score)
-            print(repr(self.ball.surf))
-
 
 if __name__ == "__main__":
     game = Game()
