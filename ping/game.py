@@ -68,7 +68,7 @@ class Game:
                         self.running = False
 
             self.screen.fill((0, 0, 0))
-            self.clock.tick(60)
+            self.clock.tick(20)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update()
             self.screen.blit(self.background, (0, 0))
@@ -78,22 +78,18 @@ class Game:
             self.check_bat_move()
             self.check_ball_hits_bat()
 
+            CHANCE = random.randrange(1, 100, 1) # start/stop/step
 
-            NPC_UP = random.choice([False, True])
-            NPC_DOWN = random.choice([False, True])
-            CHANCE = random.randrange(1, 100, 1) # second value sets probability
-
-            if NPC_UP:
-                if CHANCE > 50:
-                    (self.right_bat.rect.y) = (self.ball.rect.top) 
-                else:
-                    (self.right_bat.rect.y) = (self.ball.rect.top) - self.right_bat.rect.height
+            if CHANCE < 99:
+                (self.right_bat.rect.y) = (self.ball.rect.top) # follow bat
                 
-            if NPC_DOWN:
-                if CHANCE > 50:
-                    (self.right_bat.rect.y) = (self.ball.rect.top) 
-                else:
-                    (self.right_bat.rect.y) = (self.ball.rect.top) - self.right_bat.rect.height
+            else:
+                (self.right_bat.rect.y) = (self.ball.rect.top) - self.right_bat.rect.height # miss bat by 1 bat height
+            
+            if CHANCE < 99:
+                (self.right_bat.rect.y) = (self.ball.rect.top) 
+            else:
+                (self.right_bat.rect.y) = (self.ball.rect.top) - self.right_bat.rect.height
 
             pygame.display.flip()
 
