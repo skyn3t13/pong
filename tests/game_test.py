@@ -20,4 +20,8 @@ def test_ball_moves_from_starting_position():
 
 def test_output_data():
     game = Game()
-    assert game.output_data() == {'bx': 400, 'by': 300, 'l': 300, 'r': 300, 'score': {'p1': 0, 'p2': 0}}
+    assert game.output_data() == {'bx': 400,
+                                  'by': 300, 
+                                  'l': 300,
+                                  'r': 300,
+                                  'score': {'p1': 0, 'p2': 0}}

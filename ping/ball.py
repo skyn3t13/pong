@@ -60,5 +60,3 @@ class Ball(pygame.sprite.Sprite):
 
     def set_white(self):
         self.surf.fill((255, 255, 255))
-
-
