@@ -17,6 +17,6 @@ This version of Pong was implemented as final group project for the Makers Acade
 - run `pipenv install`
 - run `pipenv shell` if the command line says so
 - run pytest # --> confirm that all tests pass
-- run `python3 ping/game.py`
+- run `python3 app.py`
 - enjoy!
 ```
