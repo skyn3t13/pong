@@ -68,7 +68,7 @@ class Game:
                         self.running = False
 
             self.screen.fill((0, 0, 0))
-            self.clock.tick(20)
+            self.clock.tick(60)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update()
             self.screen.blit(self.background, (0, 0))
