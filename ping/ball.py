@@ -1,10 +1,10 @@
 import pygame
-import time
+
 
 class Ball(pygame.sprite.Sprite):
     def __init__(self, y_middle, x_middle):
         super(Ball, self).__init__()
-        self.surf = pygame.Surface((25, 25))
+        self.surf = pygame.Surface((25, 25)) # pylint: disable=too-many-function-args
         self.set_white()
         self.rect = self.surf.get_rect()
         self.speed = 0
@@ -13,7 +13,7 @@ class Ball(pygame.sprite.Sprite):
         self.x_middle = x_middle
         self.reset = False
 
-    def update(self, score, *args):
+    def update(self, score):
         if self.rect.left < 0:
             self.rect.left = 0
             self.stop_ball()

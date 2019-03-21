@@ -1,4 +1,3 @@
-import pytest
 from ping.bat import Bat
 
 
