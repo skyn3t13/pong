@@ -10,6 +10,7 @@ pep8 = "*"
 pygame = "*"
 pytest = "*"
 pyautogui = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.7"

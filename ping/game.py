@@ -1,4 +1,5 @@
 import pygame
+import numpy as np
 from pygame.locals import *
 from ping.bat import Bat
 from ping.ball import Ball
@@ -65,6 +66,13 @@ class Game:
                   "score": self.score}
         return output
 
+    def prepare_data(self, data_hash):
+        array = list(data_hash.values())[:4]
+        array.append(data_hash['score']['p1'])
+        array.append(data_hash['score']['p2'])
+        numpy_array = np.array(array)
+        return numpy_array
+
     def game_loop(self):
         self.rect = self.screen.get_rect()
 
@@ -86,7 +94,9 @@ class Game:
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
-            print(self.output_data())
+            # print(self.output_data().values())
+            # print(self.prepare_data(self.output_data()))
+            # print(self.prepare_data(self.output_data()))
             pygame.display.flip()
 
 if __name__ == "__main__":
