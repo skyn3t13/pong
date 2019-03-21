@@ -10,6 +10,9 @@ pep8 = "*"
 pygame = "*"
 pytest = "*"
 pyautogui = "*"
+numpy = "*"
+tensorflow = "*"
+keras = "*"
 
 [requires]
 python_version = "3.7"
