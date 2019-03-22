@@ -1,6 +1,7 @@
 import pytest
 from ping.ball import Ball
 import random
+import math
 
 def test_update_blocks_top_of_screen():
     ball = Ball(300, 400)
@@ -50,3 +51,4 @@ def test_set_random_angle():
     random.seed(0)
     ball.set_random_angle()
     assert ball.speed[0] == -speed
+    assert ball.speed[1] == (10 - speed)
