@@ -65,26 +65,15 @@ class Game:  # pylint: disable=too-many-instance-attributes
 
     def npc_player_left(self):
         CHANCE = random.randint(1, 9999)
-        if CHANCE > 5000:
+        if CHANCE > 5000: # set randomness
             self.left_bat.rect.y = self.ball.rect.y
             if self.ball.rect.y >= 500:
                 self.left_bat.rect.y = 500
             if self.ball.rect.y <= 0:
                 self.left_bat.rect.y = 0
-        elif CHANCE < 5000 and self.rect.x > 780:
+        elif CHANCE < 5000 and self.rect.x > 780: # set randomness
             self.left_bat.rect.y = self.ball.rect.y - self.right_bat.height  
 
-
-    def npc_player_right(self):
-        CHANCE = random.randint(1, 9999)
-        if CHANCE > 5000:
-            self.right_bat.rect.y = self.ball.rect.y
-            if self.ball.rect.y >= 500:
-                self.right_bat.rect.y = 500
-            if self.ball.rect.y <= 0:
-                self.right_bat.rect.y = 0
-        elif CHANCE < 5000 and self.rect.x > 780:
-            self.right_bat.rect.y = self.ball.rect.y - self.right_bat.height  
 
     def print_score(self):
         myfont = pygame.font.SysFont('Impact', 80)
@@ -127,7 +116,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.check_bat_move()
             self.check_ball_hits_bat()
             self.npc_player_left()
-            self.npc_player_right()
             self.print_score()
 
 
