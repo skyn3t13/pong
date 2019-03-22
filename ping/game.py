@@ -40,6 +40,8 @@ class Game:
         self.ball.rect.y = Game.Y_MIDDLE_SCREEN
         self.ball.rect.x = Game.X_MIDDLE_SCREEN
         self.background = pygame.Surface(self.screen.get_size())
+        self.games = 1
+        self.epsilon = 1
         self.score = {"p1": 0, "p2": 0}
         self.robotron3000 = Ai()
 
@@ -75,6 +77,10 @@ class Game:
         numpy_array = np.array(array)
         return numpy_array
 
+    def update_epsilon(self):
+        if self.epsilon > 0.1:
+            self.epsilon -= 0.001
+
     def game_loop(self):
         self.rect = self.screen.get_rect()
 
@@ -96,8 +102,9 @@ class Game:
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
-            self.robotron3000.recieve_state(self.prepare_data(self.output_data()))
+            self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
             # print(self.prepare_data(self.output_data()))
+            self.update_epsilon()
             pygame.display.flip()
 
 if __name__ == "__main__":
