@@ -23,8 +23,7 @@ class Game:
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
-                                               Game.SCREEN_HEIGHT),
-                                               HWSURFACE|FULLSCREEN)
+                                               Game.SCREEN_HEIGHT))
         self.left_bat = Bat(Game.SCREEN_HEIGHT,
                             Game.BAT_WIDTH,
                             Game.BAT_HEIGHT,
@@ -108,6 +107,7 @@ class Game:
                 self.ball.reset_ball()
             self.screen.fill((0, 0, 0))
             self.clock.tick(60)
+            self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update(self.score)
             self.screen.blit(self.background, (0, 0))
@@ -116,8 +116,7 @@ class Game:
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
-            self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
-            # print(self.prepare_data(self.output_data()))
+            self.robotron3000.update_state(self.prepare_data(self.output_data()))
             self.update_epsilon()
             pygame.display.flip()
 
