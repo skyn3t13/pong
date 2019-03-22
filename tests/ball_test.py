@@ -9,14 +9,12 @@ def test_update_blocks_top_of_screen():
     ball.update(score)
     assert ball.rect.top == 0
 
-
 def test_update_blocks_bottom_of_screen():
     ball = Ball(300, 400)
     ball.rect.bottom = 601
     score = {"p1": 0, "p2": 0}
     ball.update(score)
     assert ball.rect.bottom == 600
-
 
 def test_reverse_vertical_direction():
     ball = Ball(300, 400)
@@ -28,7 +26,6 @@ def test_stop_ball():
     ball = Ball(300, 400)
     ball.stop_ball()
     assert ball.speed == (0, 0)
-
 
 def test_set_ball_speed():
     ball = Ball(300, 400)
@@ -53,3 +50,9 @@ def test_set_random_angle():
     ball.set_random_angle()
     assert ball.speed[0] == -speed
     assert ball.speed[1] == (10 - speed)
+
+def test_angle_limiter():
+    ball = Ball(300, 400)
+    ball.speed = (10, 12)
+    ball.angle_limiter(2)
+    assert ball.speed[0] == 2
