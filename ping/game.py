@@ -124,8 +124,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.screen.blit(self.ball.surf, self.ball.rect)
             self.screen.blit(self.left_bat.surf, self.left_bat.rect)
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
-            # self.screen.blit(self.font.render(self.game_score(), 1, (255, 255, 255)),
-            #                  (self.X_MIDDLE_SCREEN, 10))
             self.check_bat_move()
             self.check_ball_hits_bat()
             self.npc_player_left()
