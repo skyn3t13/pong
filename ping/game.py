@@ -1,9 +1,10 @@
 import pygame  # pylint: disable=wildcard-import,ungrouped-imports
 import numpy as np
+import random
 from pygame.locals import *  # pylint: disable=wildcard-import
-from ping.bat import Bat
-from ping.ball import Ball
-from ping.player import Player
+from bat import Bat
+from ball import Ball
+from player import Player
 
 
 class Game:  # pylint: disable=too-many-instance-attributes
@@ -60,6 +61,18 @@ class Game:  # pylint: disable=too-many-instance-attributes
         if self.ball.rect.colliderect(self.right_bat):
             self.ball.reverse_horizontal_direction()
 
+
+    def npc_player(self):
+        CHANCE = random.randint(1, 9999)
+        if CHANCE > 5000:
+            self.right_bat.rect.y = self.ball.rect.y
+        elif self.ball.rect.y > 550:
+            self.right_bat.rect.y = 500
+        elif self.ball.rect.y < 50:
+            self.right_bat.rect.y = 0
+        else:
+            self.right_bat.rect.y = self.ball.rect.y - self.right_bat.bat_height
+
     def output_data(self):
         output = {"l": self.left_bat.rect.y,
                   "r": self.right_bat.rect.y,
@@ -94,6 +107,9 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
+            if self.ball.rect.x > 600:
+                self.npc_player()
+
             print(self.prepare_data(self.output_data()))
             pygame.display.flip()
 

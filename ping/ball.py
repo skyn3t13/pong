@@ -45,11 +45,11 @@ class Ball(pygame.sprite.Sprite):
     def stop_ball(self):
         self.set_ball_speed(0, 0)
 
-    def set_ball_speed(self, x_speed=10, y_speed=0):
+    def set_ball_speed(self, x_speed=10, y_speed=3):
         self.speed = (x_speed, y_speed)
 
     def reset_ball(self):
-        self.set_ball_speed(10, 0)
+        self.set_ball_speed(10, 3)
         self.rect.y = self.y_middle
         self.rect.x = self.x_middle
         self.set_white()
