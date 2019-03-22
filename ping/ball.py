@@ -4,7 +4,7 @@ import pygame
 class Ball(pygame.sprite.Sprite):
     def __init__(self, y_middle, x_middle):
         super(Ball, self).__init__()
-        self.surf = pygame.Surface((25, 25)) # pylint: disable=too-many-function-args
+        self.surf = pygame.Surface((25, 25))  # pylint: disable=too-many-function-args
         self.set_white()
         self.rect = self.surf.get_rect()
         self.speed = 0
