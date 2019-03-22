@@ -1,4 +1,3 @@
-import pytest
 from ping.ball import Ball
 import random
 import math
@@ -18,6 +17,7 @@ def test_update_blocks_bottom_of_screen():
     ball.update(score)
     assert ball.rect.bottom == 600
 
+
 def test_reverse_vertical_direction():
     ball = Ball(300, 400)
     speed = ball.speed[1]
@@ -28,6 +28,7 @@ def test_stop_ball():
     ball = Ball(300, 400)
     ball.stop_ball()
     assert ball.speed == (0, 0)
+
 
 def test_set_ball_speed():
     ball = Ball(300, 400)
