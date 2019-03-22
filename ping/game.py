@@ -23,7 +23,8 @@ class Game:
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
-                                               Game.SCREEN_HEIGHT))
+                                               Game.SCREEN_HEIGHT),
+                                               HWSURFACE|FULLSCREEN)
         self.left_bat = Bat(Game.SCREEN_HEIGHT,
                             Game.BAT_WIDTH,
                             Game.BAT_HEIGHT,

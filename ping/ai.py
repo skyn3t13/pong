@@ -9,6 +9,7 @@ class Ai:
     def __init__(self, game):
         self.game = game
         self.gamma = 0.9
+        self.game_over = 1
         self.model = Sequential()
         self.model.add(Dense(164, init='lecun_uniform', input_shape=(4,)))
         self.model.add(Activation('relu'))
@@ -41,9 +42,11 @@ class Ai:
         # Set the update to be based on the maximum Q value (a decreased value)
         if reward == 0:
             update = reward + (self.gamma * maxQ)
+            self.game_over = 0
         # If not the reward itself is the update
         else:
             update = reward
+            self.game_over = 1
         # create an empty numpy array y
         y = np.zeros((1,2))
         # make y a copy of qval (original model output)
@@ -57,6 +60,6 @@ class Ai:
 
     def take_action(self, action):
         if action == 0:
-            self.game.left_bat.move_down(10)
+            self.game.right_bat.move_down(10)
         else:
-            self.game.left_bat.move_up(10)
+            self.game.right_bat.move_up(10)
