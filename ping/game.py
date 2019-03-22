@@ -100,6 +100,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
+                        self.robotron3000.model.save('test.h5')
                         self.running = False
 
             if self.ball.reset:
