@@ -1,11 +1,12 @@
-import pygame
+import pygame  # pylint: disable=wildcard-import,ungrouped-imports
 import numpy as np
-from pygame.locals import *
+from pygame.locals import *  # pylint: disable=wildcard-import
 from ping.bat import Bat
 from ping.ball import Ball
 from ping.player import Player
 
-class Game:
+
+class Game:  # pylint: disable=too-many-instance-attributes
 
     SCREEN_HEIGHT = 600
     SCREEN_WIDTH = 800
@@ -18,7 +19,7 @@ class Game:
 
     def __init__(self, ball=Ball(Y_MIDDLE_SCREEN, X_MIDDLE_SCREEN)):
 
-        pygame.init()
+        pygame.init()  # pylint: disable=E1101
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
@@ -28,18 +29,19 @@ class Game:
                             Game.BAT_HEIGHT,
                             0,
                             Game.Y_MIDDLE_SCREEN)
-        self.left_player = Player(pygame.K_w, pygame.K_s)
-        self.right_bat = Bat(Game.SCREEN_HEIGHT,
+        self.left_player = Player(pygame.K_w, pygame.K_s)  # pylint: disable=no-member
+        self.right_bat = Bat(Game.SCREEN_HEIGHT,  # pylint: disable=no-member
                              Game.BAT_WIDTH,
                              Game.BAT_HEIGHT,
                              Game.RIGHT_BAT_X_POSITION,
                              Game.Y_MIDDLE_SCREEN)
-        self.right_player = Player(pygame.K_UP, pygame.K_DOWN)
-        self.ball = ball           
+        self.right_player = Player(pygame.K_UP, pygame.K_DOWN)  # pylint: disable=no-member
+        self.ball = ball
         self.ball.rect.y = Game.Y_MIDDLE_SCREEN
         self.ball.rect.x = Game.X_MIDDLE_SCREEN
-        self.background = pygame.Surface(self.screen.get_size())
+        self.background = pygame.Surface(self.screen.get_size())  # pylint: disable=too-many-function-args
         self.score = {"p1": 0, "p2": 0}
+        self.rect = self.rect = self.screen.get_rect()
 
     def check_bat_move(self):
         keys_pressed = pygame.key.get_pressed()
@@ -74,12 +76,10 @@ class Game:
         return numpy_array
 
     def game_loop(self):
-        self.rect = self.screen.get_rect()
-
         while self.running:
             for event in pygame.event.get():
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
+                if event.type == KEYDOWN:  # pylint: disable=undefined-variable
+                    if event.key == K_ESCAPE:  # pylint: disable=undefined-variable
                         self.running = False
 
             if self.ball.reset:
@@ -97,6 +97,7 @@ class Game:
             print(self.prepare_data(self.output_data()))
             pygame.display.flip()
 
+
 if __name__ == "__main__":
-    game = Game()
-    game.game_loop()
+    GAME = Game()
+    GAME.game_loop()

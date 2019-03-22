@@ -1,7 +1,7 @@
-import pytest
 import numpy as np
 import pyautogui
 from ping.game import Game
+
 
 def test_screen_is_rendered():
     game = Game()
