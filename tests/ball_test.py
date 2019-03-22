@@ -1,6 +1,5 @@
 from ping.ball import Ball
 import random
-import math
 
 def test_update_blocks_top_of_screen():
     ball = Ball(300, 400)
