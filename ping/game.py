@@ -4,6 +4,7 @@ from pygame.locals import *
 from ping.bat import Bat
 from ping.ball import Ball
 from ping.player import Player
+from ping.ai import Ai
 
 class Game:
 
@@ -40,6 +41,7 @@ class Game:
         self.ball.rect.x = Game.X_MIDDLE_SCREEN
         self.background = pygame.Surface(self.screen.get_size())
         self.score = {"p1": 0, "p2": 0}
+        self.robotron3000 = Ai()
 
     def check_bat_move(self):
         keys_pressed = pygame.key.get_pressed()
@@ -68,8 +70,8 @@ class Game:
 
     def prepare_data(self, data_hash):
         array = list(data_hash.values())[:4]
-        array.append(data_hash['score']['p1'])
-        array.append(data_hash['score']['p2'])
+        # array.append(data_hash['score']['p1'])
+        # array.append(data_hash['score']['p2'])
         numpy_array = np.array(array)
         return numpy_array
 
@@ -94,7 +96,8 @@ class Game:
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
-            print(self.prepare_data(self.output_data()))
+            self.robotron3000.send_state(self.prepare_data(self.output_data()))
+            # print(self.prepare_data(self.output_data()))
             pygame.display.flip()
 
 if __name__ == "__main__":
