@@ -1,5 +1,4 @@
 import numpy as np
-import pyautogui
 from ping.game import Game
 
 

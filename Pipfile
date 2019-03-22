@@ -9,7 +9,6 @@ pep8 = "*"
 [packages]
 pygame = "*"
 pytest = "*"
-pyautogui = "*"
 numpy = "*"
 tensorflow = "*"
 keras = "*"
