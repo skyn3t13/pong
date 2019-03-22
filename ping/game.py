@@ -130,16 +130,9 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.print_score()
 
 
-            if self.ball.rect.x > 400 and self.ball.rect.y < 600:
-                self.ball.surf.fill((255, 0, 0))
-            else:
-                self.ball.surf.fill(random.randint(0,255), random.randint(0,255), random.randint(0,255))
-
-
             print(self.prepare_data(self.output_data()))
             pygame.display.flip()
 
-            print(self.ball.surf)
 
 
 if __name__ == "__main__":
