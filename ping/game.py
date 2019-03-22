@@ -95,6 +95,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.check_bat_move()
             self.check_ball_hits_bat()
             print(self.prepare_data(self.output_data()))
+            print(self.ball.speed)
             pygame.display.flip()
 
 
