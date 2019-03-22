@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 class Ball(pygame.sprite.Sprite):
     def __init__(self, y_middle, x_middle):
@@ -40,8 +41,9 @@ class Ball(pygame.sprite.Sprite):
     def reverse_vertical_direction(self):
         self.speed = (self.speed[0], self.speed[1] * -1)
 
-    def reverse_horizontal_direction(self):
-        self.set_random_angle()
+    # def reverse_horizontal_direction(self):
+        # self.speed = (self.speed[0] * -1, self.speed[1])
+        # self.set_random_angle()
 
     def stop_ball(self):
         self.set_ball_speed(0, 0)
@@ -71,7 +73,7 @@ class Ball(pygame.sprite.Sprite):
 
     def set_random_angle(self):
         speed_y = self.random_y()
-        if self.speed[0] <= 0:
-            self.speed = (((10 + speed_y) * -1), speed_y)
+        if self.speed[0] < 0:
+            self.speed = (((10 - abs(speed_y))), speed_y)
         elif self.speed[0] > 0:
-            self.speed = (((10 - speed_y) * -1), speed_y)
+            self.speed = (((10 - abs(speed_y)) * -1), speed_y)

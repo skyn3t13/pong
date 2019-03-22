@@ -56,9 +56,11 @@ class Game:  # pylint: disable=too-many-instance-attributes
 
     def check_ball_hits_bat(self):
         if self.ball.rect.colliderect(self.left_bat):
-            self.ball.reverse_horizontal_direction()
+            self.ball.rect.x = 11
+            self.ball.set_random_angle()
         if self.ball.rect.colliderect(self.right_bat):
-            self.ball.reverse_horizontal_direction()
+            self.ball.rect.x = 764
+            self.ball.set_random_angle()
 
     def output_data(self):
         output = {"l": self.left_bat.rect.y,
