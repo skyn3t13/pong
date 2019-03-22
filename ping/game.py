@@ -42,8 +42,9 @@ class Game:
         self.background = pygame.Surface(self.screen.get_size())
         self.games = 1
         self.epsilon = 1
+        self.old_score = {"p1": 0, "p2": 0}
         self.score = {"p1": 0, "p2": 0}
-        self.robotron3000 = Ai()
+        self.robotron3000 = Ai(self)
 
     def check_bat_move(self):
         keys_pressed = pygame.key.get_pressed()
@@ -80,6 +81,17 @@ class Game:
     def update_epsilon(self):
         if self.epsilon > 0.1:
             self.epsilon -= 0.001
+    
+    def get_reward(self):
+        if self.score['p1'] - self.old_score['p1'] > 0:
+            reward = 1000
+            self.old_score = dict(self.score)
+        elif self.score['p2'] - self.old_score['p2'] > 0:
+            reward = -1000
+            self.old_score = dict(self.score)
+        else:
+            reward = 0
+        return reward
 
     def game_loop(self):
         self.rect = self.screen.get_rect()

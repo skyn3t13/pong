@@ -12,10 +12,10 @@ class Bat(pygame.sprite.Sprite):
         self.bat_width = bat_width
         self.bat_height = bat_height
 
-    def move_up(self, move_distance):
+    def move_up(self, move_distance=10):
         if self.rect.y - move_distance > 0:
             self.rect.y -= move_distance
 
-    def move_down(self, move_distance):
+    def move_down(self, move_distance=10):
         if self.rect.y + move_distance < self.screen_height - self.bat_height:
             self.rect.y += move_distance
