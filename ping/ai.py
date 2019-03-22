@@ -16,6 +16,6 @@ class Ai:
         self.rms = RMSprop()
         self.model.compile(loss='mse', optimizer=self.rms)
 
-    def send_state(self, state):
+    def receive_state(self, state):
         print(self.model.predict(state.reshape(1, 4), batch_size=1))
 

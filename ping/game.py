@@ -96,7 +96,7 @@ class Game:
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
-            self.robotron3000.send_state(self.prepare_data(self.output_data()))
+            self.robotron3000.recieve_state(self.prepare_data(self.output_data()))
             # print(self.prepare_data(self.output_data()))
             pygame.display.flip()
 
