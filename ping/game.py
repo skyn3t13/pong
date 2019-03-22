@@ -20,6 +20,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
     def __init__(self, ball=Ball(Y_MIDDLE_SCREEN, X_MIDDLE_SCREEN)):
 
         pygame.init()  # pylint: disable=E1101
+        self.font = pygame.font.SysFont("monospace", 35)
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
@@ -80,6 +81,10 @@ class Game:  # pylint: disable=too-many-instance-attributes
         numpy_array = np.array(array)
         return numpy_array
 
+    def game_score(self):
+        return f"{self.score['p1']}   :   {self.score['p2']}"
+
+
     def game_loop(self):
         while self.running:
             for event in pygame.event.get():
@@ -97,6 +102,8 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.screen.blit(self.ball.surf, self.ball.rect)
             self.screen.blit(self.left_bat.surf, self.left_bat.rect)
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
+            self.screen.blit(self.font.render(self.game_score(), 1, (255, 255, 255)),
+                             (self.X_MIDDLE_SCREEN, 10))
             self.check_bat_move()
             self.check_ball_hits_bat()
             print(self.prepare_data(self.output_data()))
