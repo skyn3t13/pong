@@ -17,10 +17,12 @@ class Game:  # pylint: disable=too-many-instance-attributes
     Y_MIDDLE_SCREEN = SCREEN_HEIGHT / 2
     X_MIDDLE_SCREEN = SCREEN_WIDTH / 2
     RIGHT_BAT_X_POSITION = SCREEN_WIDTH - BAT_WIDTH
+    
 
     def __init__(self, ball=Ball(Y_MIDDLE_SCREEN, X_MIDDLE_SCREEN)):
 
         pygame.init()  # pylint: disable=E1101
+        pygame.font.init()
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
@@ -63,27 +65,31 @@ class Game:  # pylint: disable=too-many-instance-attributes
 
     def npc_player_left(self):
         CHANCE = random.randint(1, 9999)
-        if CHANCE > 1:
+        if CHANCE > 5000:
             self.left_bat.rect.y = self.ball.rect.y
-            if self.ball.rect.y > 500:
+            if self.ball.rect.y >= 500:
                 self.left_bat.rect.y = 500
-        elif self.ball.rect.y > 550:
-            self.left_bat.rect.y = 400
-        elif self.ball.rect.y < 50:
-            self.left_bat.rect.y = 50
-        else:
-            self.left_bat.rect.y = self.ball.rect.y - self.left_bat.bat_height
+            if self.ball.rect.y <= 0:
+                self.left_bat.rect.y = 0
+        elif CHANCE < 5000 and self.rect.x > 780:
+            self.left_bat.rect.y = self.ball.rect.y - self.right_bat.height  
+
 
     def npc_player_right(self):
         CHANCE = random.randint(1, 9999)
-        if CHANCE > 1:
+        if CHANCE > 5000:
             self.right_bat.rect.y = self.ball.rect.y
-            if self.ball.rect.y > 500:
+            if self.ball.rect.y >= 500:
                 self.right_bat.rect.y = 500
-        elif self.ball.rect.y < 50:
-            self.right_bat.rect.y = 50
-        else:
-            self.right_bat.rect.y = self.ball.rect.y - self.right_bat.bat_height
+            if self.ball.rect.y <= 0:
+                self.right_bat.rect.y = 0
+        elif CHANCE < 5000 and self.rect.x > 780:
+            self.right_bat.rect.y = self.ball.rect.y - self.right_bat.height  
+
+    def print_score(self):
+        myfont = pygame.font.SysFont('Impact', 80)
+        text = myfont.render(str(self.score['p1']) + '    :    ' + str(self.score['p2']), False, [255, 255, 255], (0, 0, 0))
+        self.screen.blit(text,(300, 50))
 
     def output_data(self):
         output = {"l": self.left_bat.rect.y,
@@ -119,14 +125,21 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
-            self.npc_player_right()
             self.npc_player_left()
+            self.npc_player_right()
+            self.print_score()
 
-            # print(self.prepare_data(self.output_data()))
-            print(self.right_bat.rect.y)
-            print(self.ball.rect.y)
 
+            if self.ball.rect.x > 400 and self.ball.rect.y < 600:
+                self.ball.surf.fill((255, 0, 0))
+            else:
+                self.ball.surf.fill(random.randint(0,255), random.randint(0,255), random.randint(0,255))
+
+
+            print(self.prepare_data(self.output_data()))
             pygame.display.flip()
+
+            print(self.ball.surf)
 
 
 if __name__ == "__main__":
