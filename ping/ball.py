@@ -52,7 +52,7 @@ class Ball(pygame.sprite.Sprite):
         self.speed = (x_speed, y_speed)
 
     def reset_ball(self):
-        self.set_ball_speed(10, 0)
+        self.set_ball_speed(self.starting_player(), 0)
         self.rect.y = self.y_middle
         self.rect.x = self.x_middle
         self.set_white()
@@ -65,11 +65,11 @@ class Ball(pygame.sprite.Sprite):
         self.surf.fill((255, 255, 255))
 
     def random_angle(self):
-        self.random = (random.randrange(-4, 4))
+        self.random = (random.randrange(-3, 3))
+        return self.random
 
     def random_y(self):
-        self.random_angle()
-        return self.speed[1] + self.random
+        return self.speed[1] + self.random_angle()
 
     def set_random_angle(self):
         speed_y = self.random_y()
@@ -77,3 +77,7 @@ class Ball(pygame.sprite.Sprite):
             self.speed = (((10 - abs(speed_y))), speed_y)
         elif self.speed[0] > 0:
             self.speed = (((10 - abs(speed_y)) * -1), speed_y)
+
+    def starting_player(self):
+        number = random.sample([-10, 10], 1)
+        return number[0]
