@@ -61,15 +61,27 @@ class Game:  # pylint: disable=too-many-instance-attributes
         if self.ball.rect.colliderect(self.right_bat):
             self.ball.reverse_horizontal_direction()
 
-
-    def npc_player(self):
+    def npc_player_left(self):
         CHANCE = random.randint(1, 9999)
-        if CHANCE > 5000:
-            self.right_bat.rect.y = self.ball.rect.y
+        if CHANCE > 1:
+            self.left_bat.rect.y = self.ball.rect.y
+            if self.ball.rect.y > 500:
+                self.left_bat.rect.y = 500
         elif self.ball.rect.y > 550:
-            self.right_bat.rect.y = 500
+            self.left_bat.rect.y = 400
         elif self.ball.rect.y < 50:
-            self.right_bat.rect.y = 0
+            self.left_bat.rect.y = 50
+        else:
+            self.left_bat.rect.y = self.ball.rect.y - self.left_bat.bat_height
+
+    def npc_player_right(self):
+        CHANCE = random.randint(1, 9999)
+        if CHANCE > 1:
+            self.right_bat.rect.y = self.ball.rect.y
+            if self.ball.rect.y > 500:
+                self.right_bat.rect.y = 500
+        elif self.ball.rect.y < 50:
+            self.right_bat.rect.y = 50
         else:
             self.right_bat.rect.y = self.ball.rect.y - self.right_bat.bat_height
 
@@ -98,7 +110,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
             if self.ball.reset:
                 self.ball.reset_ball()
             self.screen.fill((0, 0, 0))
-            self.clock.tick(60)
+            self.clock.tick(100)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update(self.score)
             self.screen.blit(self.background, (0, 0))
@@ -107,10 +119,13 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
-            if self.ball.rect.x > 600:
-                self.npc_player()
+            self.npc_player_right()
+            self.npc_player_left()
 
-            print(self.prepare_data(self.output_data()))
+            # print(self.prepare_data(self.output_data()))
+            print(self.right_bat.rect.y)
+            print(self.ball.rect.y)
+
             pygame.display.flip()
 
 
