@@ -3,7 +3,7 @@ import random
 import math
 
 class Ball(pygame.sprite.Sprite):
-    def __init__(self, y_middle, x_middle):
+    def __init__(self, x_middle, y_middle):
         super(Ball, self).__init__()
         self.surf = pygame.Surface((25, 25)) # pylint: disable=too-many-function-args
         self.set_white()
@@ -40,10 +40,6 @@ class Ball(pygame.sprite.Sprite):
 
     def reverse_vertical_direction(self):
         self.speed = (self.speed[0], self.speed[1] * -1)
-
-    # def reverse_horizontal_direction(self):
-        # self.speed = (self.speed[0] * -1, self.speed[1])
-        # self.set_random_angle()
 
     def stop_ball(self):
         self.set_ball_speed(0, 0)
@@ -83,5 +79,4 @@ class Ball(pygame.sprite.Sprite):
             self.speed = (x_speed, 8)
 
     def starting_player(self):
-        number = random.sample([-10, 10], 1)
-        return number[0]
+        return random.choice([-10, 10])

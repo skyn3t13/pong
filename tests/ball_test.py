@@ -1,6 +1,6 @@
 import pytest
 from ping.ball import Ball
-
+import random
 
 def test_update_blocks_top_of_screen():
     ball = Ball(300, 400)
@@ -23,12 +23,6 @@ def test_reverse_vertical_direction():
     ball.reverse_vertical_direction()
     assert ball.speed[1] == -speed
 
-def test_reverse_horizontal_direction():
-    ball = Ball(300, 400)
-    speed = ball.speed[0]
-    ball.reverse_horizontal_direction()
-    assert ball.speed[0] == -speed
-
 def test_stop_ball():
     ball = Ball(300, 400)
     ball.stop_ball()
@@ -39,12 +33,20 @@ def test_set_ball_speed():
     ball.set_ball_speed(100, 100)
     assert ball.speed == (100, 100)
 
-def reset_ball():
+def test_reset_ball():
     ball = Ball(300, 400)
     ball.rect.x = 0
     ball.rect.y = 0
     ball.set_ball_speed(100, 100)
+    random.seed(0)
     ball.reset_ball()
     assert ball.rect.x == 300
     assert ball.rect.y == 400
     assert ball.speed == (10, 0)
+
+def test_set_random_angle():
+    ball = Ball(300, 400)
+    speed = ball.speed[0]
+    random.seed(0)
+    ball.set_random_angle()
+    assert ball.speed[0] == -speed
