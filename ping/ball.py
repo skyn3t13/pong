@@ -78,6 +78,10 @@ class Ball(pygame.sprite.Sprite):
         elif self.speed[0] > 0:
             self.speed = (((10 - abs(speed_y)) * -1), speed_y)
 
+    def angle_limiter(self, x_speed):
+        if abs(self.speed[1]) > 8:
+            self.speed = (x_speed, 8)
+
     def starting_player(self):
         number = random.sample([-10, 10], 1)
         return number[0]

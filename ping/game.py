@@ -58,14 +58,12 @@ class Game:  # pylint: disable=too-many-instance-attributes
         if self.ball.rect.colliderect(self.left_bat):
             self.ball.rect.x = 11
             self.ball.set_random_angle()
-        if abs(self.ball.speed[1]) > 8:
-            self.ball.speed = (2, 8)
+            self.ball.angle_limiter(2)
 
         if self.ball.rect.colliderect(self.right_bat):
             self.ball.rect.x = 764
             self.ball.set_random_angle()
-        if abs(self.ball.speed[1]) > 8:
-            self.ball.speed = (-2, 8)
+            self.ball.angle_limiter(-2)
 
     def output_data(self):
         output = {"l": self.left_bat.rect.y,
