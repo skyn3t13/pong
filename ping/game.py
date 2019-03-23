@@ -84,10 +84,10 @@ class Game:
     
     def get_reward(self):
         if self.score['p1'] - self.old_score['p1'] > 0:
-            reward = 1000
+            reward = 10
             self.old_score = dict(self.score)
         elif self.score['p2'] - self.old_score['p2'] > 0:
-            reward = -1000
+            reward = -10
             self.old_score = dict(self.score)
         else:
             reward = 0

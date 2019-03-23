@@ -9,11 +9,11 @@ class Ai:
     def __init__(self, game):
         self.game = game
         self.gamma = 0.9
-        self.game_over = 1
+        self.game_over = 0
         self.model = Sequential()
-        self.model.add(Dense(164, init='lecun_uniform', input_shape=(4,)))
+        self.model.add(Dense(200, init='lecun_uniform', input_shape=(4,)))
         self.model.add(Activation('relu'))
-        self.model.add(Dense(150, init='lecun_uniform'))
+        self.model.add(Dense(168, init='lecun_uniform'))
         self.model.add(Activation('relu'))
         self.model.add(Dense(2, init='lecun_uniform'))
         self.model.add(Activation('linear'))
