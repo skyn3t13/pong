@@ -39,23 +39,33 @@ class Game:  # pylint: disable=too-many-instance-attributes
                              Game.RIGHT_BAT_X_POSITION,
                              Game.Y_MIDDLE_SCREEN)
         self.right_player = Player(pygame.K_UP, pygame.K_DOWN)  # pylint: disable=no-member
+        self.npc_controller = Player(pygame.K_d, pygame.K_f)
         self.ball = ball
         self.ball.rect.y = Game.Y_MIDDLE_SCREEN
         self.ball.rect.x = Game.X_MIDDLE_SCREEN
         self.background = pygame.Surface(self.screen.get_size())  # pylint: disable=too-many-function-args
         self.score = {"p1": 0, "p2": 0}
         self.rect = self.rect = self.screen.get_rect()
+        self.npc_on = False
 
     def check_bat_move(self):
         keys_pressed = pygame.key.get_pressed()
-        if keys_pressed[self.left_player.key_up]:
-            self.left_bat.move_up(Game.BAT_MOVE)
-        if keys_pressed[self.left_player.key_down]:
-            self.left_bat.move_down(Game.BAT_MOVE)
+        if self.npc_on == False:
+            if keys_pressed[self.left_player.key_up]:
+                self.left_bat.move_up(Game.BAT_MOVE)
+            if keys_pressed[self.left_player.key_down]:
+                self.left_bat.move_down(Game.BAT_MOVE)
         if keys_pressed[self.right_player.key_up]:
             self.right_bat.move_up(Game.BAT_MOVE)
         if keys_pressed[self.right_player.key_down]:
             self.right_bat.move_down(Game.BAT_MOVE)
+
+    def turn_npc_on_or_off(self):
+        keys_pressed = pygame.key.get_pressed()
+        if keys_pressed[self.npc_controller.key_up]:
+            self.npc_on = True
+        if keys_pressed[self.npc_controller.key_down]:
+            self.npc_on = False
 
     def check_ball_hits_bat(self):
         if self.ball.rect.colliderect(self.left_bat):
@@ -63,8 +73,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
         if self.ball.rect.colliderect(self.right_bat):
             self.ball.reverse_horizontal_direction()
 
-    def npc_player_left(self):
-        print('HELLO THOMAS')
+    def moves_npc_player(self):
         CHANCE = random.randint(1, 9999)
         if CHANCE > 3450:
             if self.left_bat.rect.y > self.ball.rect.y:
@@ -113,10 +122,10 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
-            self.npc_player_left()
+            self.turn_npc_on_or_off()
+            if self.npc_on == True:
+                self.moves_npc_player()
             self.print_score()
-
-
             print(self.prepare_data(self.output_data()))
             pygame.display.flip()
 
