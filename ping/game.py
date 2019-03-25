@@ -80,7 +80,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
 
     def update_epsilon(self):
         if self.epsilon > 0.1:
-            self.epsilon -= 0.0000001
+            self.epsilon -= 0.00001
 
     def get_reward(self):
         if self.score['p1'] - self.old_score['p1'] > 0:
@@ -122,6 +122,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.check_ball_hits_bat()
             self.robotron3000.update_state(self.prepare_data(self.output_data()))
             self.update_epsilon()
+            print(self.epsilon)
             print(self.output_data())
             pygame.display.flip()
 
