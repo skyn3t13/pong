@@ -2,9 +2,9 @@ import pygame  # pylint: disable=wildcard-import,ungrouped-imports
 import numpy as np
 import random
 from pygame.locals import *  # pylint: disable=wildcard-import
-from bat import Bat
-from ball import Ball
-from player import Player
+from ping.bat import Bat
+from ping.ball import Ball
+from ping.player import Player
 
 
 class Game:  # pylint: disable=too-many-instance-attributes
@@ -17,7 +17,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
     Y_MIDDLE_SCREEN = SCREEN_HEIGHT / 2
     X_MIDDLE_SCREEN = SCREEN_WIDTH / 2
     RIGHT_BAT_X_POSITION = SCREEN_WIDTH - BAT_WIDTH
-    
+
 
     def __init__(self, ball=Ball(Y_MIDDLE_SCREEN, X_MIDDLE_SCREEN)):
 
@@ -64,15 +64,13 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.ball.reverse_horizontal_direction()
 
     def npc_player_left(self):
+        print('HELLO THOMAS')
         CHANCE = random.randint(1, 9999)
-        if CHANCE > 5000: # set randomness
-            self.left_bat.rect.y = self.ball.rect.y
-            if self.ball.rect.y >= 500:
-                self.left_bat.rect.y = 500
-            if self.ball.rect.y <= 0:
-                self.left_bat.rect.y = 0
-        elif CHANCE < 5000 and self.rect.x > 780: # set randomness
-            self.left_bat.rect.y = self.ball.rect.y - self.right_bat.height  
+        if CHANCE > 3450:
+            if self.left_bat.rect.y > self.ball.rect.y:
+                self.left_bat.move_up(Game.BAT_MOVE)
+            if self.left_bat.rect.y < self.ball.rect.y:
+                self.left_bat.move_down(Game.BAT_MOVE)
 
 
     def print_score(self):

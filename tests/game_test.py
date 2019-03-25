@@ -1,6 +1,6 @@
 import numpy as np
 from ping.game import Game
-
+import random
 
 def test_screen_is_rendered():
     game = Game()
@@ -39,3 +39,10 @@ def test_game_score():
     game = Game()
     game.score = {"p1": 0, "p2": 1}
     assert game.game_score() == f"0   :   1"
+
+def test_npc_player_left():
+    game = Game()
+    game.ball.rect.y = 0
+    random.seed(4000)
+    game.npc_player_left()
+    assert game.left_bat.rect.y == 290
