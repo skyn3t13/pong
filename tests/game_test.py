@@ -1,7 +1,6 @@
-import pytest
 import numpy as np
-import pyautogui
 from ping.game import Game
+
 
 def test_screen_is_rendered():
     game = Game()
@@ -34,3 +33,9 @@ def test_prepare_data():
     game = Game()
     numpy_array = game.prepare_data(game.output_data())
     assert np.array_equal(numpy_array, [300, 300, 400, 300])
+
+
+def test_game_score():
+    game = Game()
+    game.score = {"p1": 0, "p2": 1}
+    assert game.game_score() == f"0   :   1"

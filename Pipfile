@@ -9,12 +9,12 @@ pep8 = "*"
 [packages]
 pygame = "*"
 pytest = "*"
-pyautogui = "*"
 numpy = "*"
 tensorflow = "*"
 keras = "*"
 coverage = "*"
 pytest-cov = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.7"

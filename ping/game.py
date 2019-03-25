@@ -1,12 +1,13 @@
-import pygame
+import pygame  # pylint: disable=wildcard-import,ungrouped-imports
 import numpy as np
-from pygame.locals import *
+from pygame.locals import *  # pylint: disable=wildcard-import
 from ping.bat import Bat
 from ping.ball import Ball
 from ping.player import Player
 from ping.ai import Ai
 
-class Game:
+
+class Game:  # pylint: disable=too-many-instance-attributes
 
     SCREEN_HEIGHT = 600
     SCREEN_WIDTH = 800
@@ -19,7 +20,8 @@ class Game:
 
     def __init__(self, ball=Ball(Y_MIDDLE_SCREEN, X_MIDDLE_SCREEN)):
 
-        pygame.init()
+        pygame.init()  # pylint: disable=E1101
+        self.font = pygame.font.SysFont("monospace", 35)
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
@@ -29,21 +31,22 @@ class Game:
                             Game.BAT_HEIGHT,
                             0,
                             Game.Y_MIDDLE_SCREEN)
-        self.left_player = Player(pygame.K_w, pygame.K_s)
-        self.right_bat = Bat(Game.SCREEN_HEIGHT,
+        self.left_player = Player(pygame.K_w, pygame.K_s)  # pylint: disable=no-member
+        self.right_bat = Bat(Game.SCREEN_HEIGHT,  # pylint: disable=no-member
                              Game.BAT_WIDTH,
                              Game.BAT_HEIGHT,
                              Game.RIGHT_BAT_X_POSITION,
                              Game.Y_MIDDLE_SCREEN)
-        self.right_player = Player(pygame.K_UP, pygame.K_DOWN)
-        self.ball = ball           
+        self.right_player = Player(pygame.K_UP, pygame.K_DOWN)  # pylint: disable=no-member
+        self.ball = ball
         self.ball.rect.y = Game.Y_MIDDLE_SCREEN
         self.ball.rect.x = Game.X_MIDDLE_SCREEN
-        self.background = pygame.Surface(self.screen.get_size())
+        self.background = pygame.Surface(self.screen.get_size())  # pylint: disable=too-many-function-args
         self.games = 1
         self.epsilon = 1
         self.old_score = {"p1": 0, "p2": 0}
         self.score = {"p1": 0, "p2": 0}
+        self.rect = self.rect = self.screen.get_rect()
         self.robotron3000 = Ai(self)
 
     def check_bat_move(self):
@@ -79,7 +82,7 @@ class Game:
     def update_epsilon(self):
         if self.epsilon > 0.1:
             self.epsilon -= 0.001
-    
+
     def get_reward(self):
         if self.score['p1'] - self.old_score['p1'] > 0:
             reward = -1000
@@ -91,13 +94,15 @@ class Game:
             reward = 0
         return reward
 
-    def game_loop(self):
-        self.rect = self.screen.get_rect()
+    def game_score(self):
+        return f"{self.score['p1']}   :   {self.score['p2']}"
 
+
+    def game_loop(self):
         while self.running:
             for event in pygame.event.get():
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
+                if event.type == KEYDOWN:  # pylint: disable=undefined-variable
+                    if event.key == K_ESCAPE:  # pylint: disable=undefined-variable
                         self.robotron3000.model.save('test.h5')
                         self.running = False
 
@@ -112,12 +117,15 @@ class Game:
             self.screen.blit(self.ball.surf, self.ball.rect)
             self.screen.blit(self.left_bat.surf, self.left_bat.rect)
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
+            self.screen.blit(self.font.render(self.game_score(), 1, (255, 255, 255)),
+                             (self.X_MIDDLE_SCREEN, 10))
             self.check_bat_move()
             self.check_ball_hits_bat()
             self.robotron3000.update_state(self.prepare_data(self.output_data()))
             self.update_epsilon()
             pygame.display.flip()
 
+
 if __name__ == "__main__":
-    game = Game()
-    game.game_loop()
+    GAME = Game()
+    GAME.game_loop()
