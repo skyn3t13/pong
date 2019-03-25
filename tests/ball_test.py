@@ -43,12 +43,12 @@ def test_set_ball_speed():
     assert ball.speed == (100, 100)
 
 
-def reset_ball():
+def test_reset_ball():
     ball = Ball(300, 400)
     ball.rect.x = 0
     ball.rect.y = 0
     ball.set_ball_speed(100, 100)
     ball.reset_ball()
-    assert ball.rect.x == 300
-    assert ball.rect.y == 400
+    assert ball.rect.x == 400
+    assert ball.rect.y == 300
     assert ball.speed == (10, 0)

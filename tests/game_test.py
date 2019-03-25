@@ -33,7 +33,7 @@ def test_output_data():
 def test_prepare_data():
     game = Game()
     numpy_array = game.prepare_data(game.output_data())
-    assert np.array_equal(numpy_array, [300, 300, 400, 300, 0, 0])
+    assert np.array_equal(numpy_array, [300, 300, 400, 300])
 
 def test_game_score():
     game = Game()
