@@ -9,7 +9,7 @@ class Ai:
     def __init__(self, game):
         self.game = game
         self.gamma = 0.9
-        self.game_over = 1
+        self.game_over = 0
         self.model = Sequential()
         self.model.add(Dense(164, init='lecun_uniform', input_shape=(4,)))
         self.model.add(Activation('relu'))
@@ -61,6 +61,7 @@ class Ai:
         y[0][self.action] = update
         # Update the model based on this
         self.model.fit(state.reshape(1, 4), y, batch_size=1, nb_epoch=1, verbose=1)
+        print(f"Qval is {self.qval}")
 
     def take_action(self, action):
         if action == 0:

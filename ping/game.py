@@ -73,8 +73,6 @@ class Game:
 
     def prepare_data(self, data_hash):
         array = list(data_hash.values())[:4]
-        # array.append(data_hash['score']['p1'])
-        # array.append(data_hash['score']['p2'])
         numpy_array = np.array(array)
         return numpy_array
 
@@ -84,10 +82,10 @@ class Game:
     
     def get_reward(self):
         if self.score['p1'] - self.old_score['p1'] > 0:
-            reward = 1000
+            reward = -1000
             self.old_score = dict(self.score)
         elif self.score['p2'] - self.old_score['p2'] > 0:
-            reward = -1000
+            reward = 1000
             self.old_score = dict(self.score)
         else:
             reward = 0
