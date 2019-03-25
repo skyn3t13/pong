@@ -4,6 +4,7 @@ from pygame.locals import *  # pylint: disable=wildcard-import
 from ping.bat import Bat
 from ping.ball import Ball
 from ping.player import Player
+from ping.ai import Ai
 
 
 class Game:  # pylint: disable=too-many-instance-attributes
@@ -41,8 +42,12 @@ class Game:  # pylint: disable=too-many-instance-attributes
         self.ball.rect.y = Game.Y_MIDDLE_SCREEN
         self.ball.rect.x = Game.X_MIDDLE_SCREEN
         self.background = pygame.Surface(self.screen.get_size())  # pylint: disable=too-many-function-args
+        self.games = 1
+        self.epsilon = 1
+        self.old_score = {"p1": 0, "p2": 0}
         self.score = {"p1": 0, "p2": 0}
         self.rect = self.rect = self.screen.get_rect()
+        self.robotron3000 = Ai(self)
 
     def check_bat_move(self):
         keys_pressed = pygame.key.get_pressed()
@@ -71,10 +76,23 @@ class Game:  # pylint: disable=too-many-instance-attributes
 
     def prepare_data(self, data_hash):
         array = list(data_hash.values())[:4]
-        array.append(data_hash['score']['p1'])
-        array.append(data_hash['score']['p2'])
         numpy_array = np.array(array)
         return numpy_array
+
+    def update_epsilon(self):
+        if self.epsilon > 0.1:
+            self.epsilon -= 0.001
+
+    def get_reward(self):
+        if self.score['p1'] - self.old_score['p1'] > 0:
+            reward = -1000
+            self.old_score = dict(self.score)
+        elif self.score['p2'] - self.old_score['p2'] > 0:
+            reward = 1000
+            self.old_score = dict(self.score)
+        else:
+            reward = 0
+        return reward
 
     def game_score(self):
         return f"{self.score['p1']}   :   {self.score['p2']}"
@@ -85,12 +103,14 @@ class Game:  # pylint: disable=too-many-instance-attributes
             for event in pygame.event.get():
                 if event.type == KEYDOWN:  # pylint: disable=undefined-variable
                     if event.key == K_ESCAPE:  # pylint: disable=undefined-variable
+                        self.robotron3000.model.save('test.h5')
                         self.running = False
 
             if self.ball.reset:
                 self.ball.reset_ball()
             self.screen.fill((0, 0, 0))
             self.clock.tick(60)
+            self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update(self.score)
             self.screen.blit(self.background, (0, 0))
@@ -101,7 +121,8 @@ class Game:  # pylint: disable=too-many-instance-attributes
                              (self.X_MIDDLE_SCREEN, 10))
             self.check_bat_move()
             self.check_ball_hits_bat()
-            print(self.prepare_data(self.output_data()))
+            self.robotron3000.update_state(self.prepare_data(self.output_data()))
+            self.update_epsilon()
             pygame.display.flip()
 
 
