@@ -53,11 +53,9 @@ class Game:  # pylint: disable=too-many-instance-attributes
         self.old_score = {"p1": 0, "p2": 0}
         self.score = {"p1": 0, "p2": 0}
         self.rect = self.rect = self.screen.get_rect()
-<<<<<<< HEAD
         self.npc_on = False
-=======
         self.robotron3000 = Ai(self)
->>>>>>> dev
+
 
     def check_bat_move(self):
         keys_pressed = pygame.key.get_pressed()
@@ -117,8 +115,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
         numpy_array = np.array(array)
         return numpy_array
 
-<<<<<<< HEAD
-=======
+
     def update_epsilon(self):
         if self.epsilon > 0.1:
             self.epsilon -= 0.001
@@ -137,7 +134,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
     def game_score(self):
         return f"{self.score['p1']}   :   {self.score['p2']}"
 
->>>>>>> dev
 
     def game_loop(self):
         while self.running:
@@ -150,12 +146,8 @@ class Game:  # pylint: disable=too-many-instance-attributes
             if self.ball.reset:
                 self.ball.reset_ball()
             self.screen.fill((0, 0, 0))
-<<<<<<< HEAD
-            self.clock.tick(100)
-=======
             self.clock.tick(60)
             self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
->>>>>>> dev
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update(self.score)
             self.screen.blit(self.background, (0, 0))
@@ -164,7 +156,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.screen.blit(self.right_bat.surf, self.right_bat.rect)
             self.check_bat_move()
             self.check_ball_hits_bat()
-<<<<<<< HEAD
             self.turn_npc_on_or_off()
             self.screen.blit(self.print_npc_status(),(30, 30))
             if self.npc_on == True:
@@ -172,10 +163,8 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.print_npc_status()
             self.print_score()
             print(self.prepare_data(self.output_data()))
-=======
             self.robotron3000.update_state(self.prepare_data(self.output_data()))
             self.update_epsilon()
->>>>>>> dev
             pygame.display.flip()
 
 if __name__ == "__main__":
