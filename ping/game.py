@@ -17,12 +17,15 @@ class Game:  # pylint: disable=too-many-instance-attributes
     Y_MIDDLE_SCREEN = SCREEN_HEIGHT / 2
     X_MIDDLE_SCREEN = SCREEN_WIDTH / 2
     RIGHT_BAT_X_POSITION = SCREEN_WIDTH - BAT_WIDTH
+    NPC_ON_COLOUR = [0, 255, 0]
+    NPC_OFF_COLOUR = [255, 0, 0]
 
 
     def __init__(self, ball=Ball(Y_MIDDLE_SCREEN, X_MIDDLE_SCREEN)):
 
         pygame.init()  # pylint: disable=E1101
         self.font = pygame.font.SysFont('Impact', 80)
+        self.npc_status_font = pygame.font.SysFont('Impact', 30)
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
@@ -60,12 +63,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
         if keys_pressed[self.right_player.key_down]:
             self.right_bat.move_down(Game.BAT_MOVE)
 
-    def turn_npc_on_or_off(self):
-        keys_pressed = pygame.key.get_pressed()
-        if keys_pressed[self.npc_controller.key_up]:
-            self.npc_on = True
-        if keys_pressed[self.npc_controller.key_down]:
-            self.npc_on = False
 
     def check_ball_hits_bat(self):
         if self.ball.rect.colliderect(self.left_bat):
@@ -81,6 +78,18 @@ class Game:  # pylint: disable=too-many-instance-attributes
             if self.left_bat.rect.y < self.ball.rect.y:
                 self.left_bat.move_down(Game.BAT_MOVE)
 
+    def turn_npc_on_or_off(self):
+        keys_pressed = pygame.key.get_pressed()
+        if keys_pressed[self.npc_controller.key_up]:
+            self.npc_on = True
+        if keys_pressed[self.npc_controller.key_down]:
+            self.npc_on = False
+
+    def print_npc_status(self):
+        if self.npc_on == True:
+            return self.npc_status_font.render(str('NPC: On') ,False, Game.NPC_ON_COLOUR, (0, 0, 0))
+        else:
+            return self.npc_status_font.render(str('NPC: Off') ,False, Game.NPC_OFF_COLOUR, (0, 0, 0))
 
     def print_score(self):
         myfont = pygame.font.SysFont('Impact', 80)
@@ -123,13 +132,13 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.check_bat_move()
             self.check_ball_hits_bat()
             self.turn_npc_on_or_off()
+            self.screen.blit(self.print_npc_status(),(30, 30))
             if self.npc_on == True:
                 self.moves_npc_player()
+            self.print_npc_status()
             self.print_score()
             print(self.prepare_data(self.output_data()))
             pygame.display.flip()
-
-
 
 if __name__ == "__main__":
     GAME = Game()
