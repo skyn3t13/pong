@@ -6,9 +6,14 @@ matrix:
           dist: xenial
           sudo: true
 
+services:
+    - xvfb
+
 script:
     - pytest
     - pylint ping/*.py
+    - xvfb-run make test
+    - xvfb-run --server-args="-screen 0 1024x768x24" make test
 
 before_install:
     - sudo apt-get update -qq
