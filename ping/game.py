@@ -115,7 +115,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
         numpy_array = np.array(array)
         return numpy_array
 
-
     def update_epsilon(self):
         if self.epsilon > 0.1:
             self.epsilon -= 0.001
@@ -133,7 +132,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
 
     def game_score(self):
         return f"{self.score['p1']}   :   {self.score['p2']}"
-
 
     def game_loop(self):
         while self.running:
