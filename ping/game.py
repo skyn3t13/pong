@@ -96,11 +96,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
             return self.npc_font.render(str('NPC: On'), False, Game.NPC_ON_COLOUR, (0, 0, 0))
         return self.npc_font.render(str('NPC: Off'), False, Game.NPC_OFF_COLOUR, (0, 0, 0))
 
-    # def print_score(self):
-    #     myfont = pygame.font.SysFont('Impact', 80)
-    #     text = myfont.render(str(self.score['p1']) + '    :    ' + str(self.score['p2']), False, [255, 255, 255], (0, 0, 0))
-    #     self.screen.blit(text, (300, 50))
-
     def output_data(self):
         output = {"l": self.left_bat.rect.y,
                   "r": self.right_bat.rect.y,
@@ -139,7 +134,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
                     if event.key == K_ESCAPE:  # pylint: disable=undefined-variable
                         self.robotron3000.model.save('test.h5')
                         self.running = False
-
             if self.ball.reset:
                 self.ball.reset_ball()
             self.screen.fill((0, 0, 0))
@@ -160,7 +154,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
             if self.npc_on:
                 self.moves_npc_player()
             self.print_npc_status()
-            self.print_score()
             print(self.prepare_data(self.output_data()))
             self.robotron3000.update_state(self.prepare_data(self.output_data()))
             self.update_epsilon()
