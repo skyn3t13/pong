@@ -1,6 +1,6 @@
+import random
 import pygame  # pylint: disable=wildcard-import,ungrouped-imports
 import numpy as np
-import random
 from pygame.locals import *  # pylint: disable=wildcard-import
 from ping.bat import Bat
 from ping.ball import Ball
@@ -26,7 +26,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
 
         pygame.init()  # pylint: disable=E1101
         self.font = pygame.font.SysFont('Impact', 80)
-        self.npc_status_font = pygame.font.SysFont('Impact', 30)
+        self.npc_font = pygame.font.SysFont('Impact', 30)
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((Game.SCREEN_WIDTH,
@@ -59,7 +59,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
 
     def check_bat_move(self):
         keys_pressed = pygame.key.get_pressed()
-        if self.npc_on == False:
+        if not self.npc_on:
             if keys_pressed[self.left_player.key_up]:
                 self.left_bat.move_up(Game.BAT_MOVE)
             if keys_pressed[self.left_player.key_down]:
@@ -77,8 +77,8 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.ball.reverse_horizontal_direction()
 
     def moves_npc_player(self):
-        CHANCE = random.randint(1, 9999)
-        if CHANCE > 3450:
+        chance = random.randint(1, 9999)
+        if chance > 3450:
             if self.left_bat.rect.y > self.ball.rect.y:
                 self.left_bat.move_up(Game.BAT_MOVE)
             if self.left_bat.rect.y < self.ball.rect.y:
@@ -92,15 +92,14 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.npc_on = False
 
     def print_npc_status(self):
-        if self.npc_on == True:
-            return self.npc_status_font.render(str('NPC: On') ,False, Game.NPC_ON_COLOUR, (0, 0, 0))
-        else:
-            return self.npc_status_font.render(str('NPC: Off') ,False, Game.NPC_OFF_COLOUR, (0, 0, 0))
+        if self.npc_on:
+            return self.npc_font.render(str('NPC: On'), False, Game.NPC_ON_COLOUR, (0, 0, 0))
+        return self.npc_font.render(str('NPC: Off'), False, Game.NPC_OFF_COLOUR, (0, 0, 0))
 
     def print_score(self):
         myfont = pygame.font.SysFont('Impact', 80)
         text = myfont.render(str(self.score['p1']) + '    :    ' + str(self.score['p2']), False, [255, 255, 255], (0, 0, 0))
-        self.screen.blit(text,(300, 50))
+        self.screen.blit(text, (300, 50))
 
     def output_data(self):
         output = {"l": self.left_bat.rect.y,
@@ -155,8 +154,8 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.check_bat_move()
             self.check_ball_hits_bat()
             self.turn_npc_on_or_off()
-            self.screen.blit(self.print_npc_status(),(30, 30))
-            if self.npc_on == True:
+            self.screen.blit(self.print_npc_status(), (30, 30))
+            if self.npc_on:
                 self.moves_npc_player()
             self.print_npc_status()
             self.print_score()
