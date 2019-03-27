@@ -17,7 +17,7 @@ class Ball(pygame.sprite.Sprite):
         self.reset = False
         self.random = 0
         self.colour = [0, 0, 0]
-        self.number = 30
+        self.number = 25
         self.three_d_turned_on = False
 
     def update(self, score):
@@ -60,17 +60,20 @@ class Ball(pygame.sprite.Sprite):
     def stop_ball(self):
         self.set_ball_speed(0, 0)
 
-    def set_ball_speed(self, x_speed=-10, y_speed=0):
+    def set_ball_speed(self, x_speed=10, y_speed=0):
         self.speed = (x_speed, y_speed)
 
     def reset_ball(self):
-        # self.set_ball_speed(self.starting_player(), 0)
-        self.set_ball_speed(-10, 0)
+        self.set_ball_speed(self.starting_player(), 0)
+        self.number = 25
+        self.surf = pygame.transform.scale(self.surf, (25, 25))
+        # self.set_ball_speed(-10, 0)
         # self.set_ball_speed(10, 0)
         self.rect.y = self.y_middle
         self.rect.x = self.x_middle
         self.set_white()
         self.reset = False
+
 
     def set_black(self):
         self.surf.fill((0, 0, 0))
@@ -84,39 +87,40 @@ class Ball(pygame.sprite.Sprite):
 
     def starting_player(self):
         # return random.choice([-10, 10])
-        return random.choice([-10, -10])
+        return random.choice([-10, 10])
 
     def change_colour(self):
         self.surf.fill((self.colour))
 
 
     def add_3d(self):
+        self.ball_size_protector()
         if self.speed[0] > 0:
-            if self.rect.x < 375:
+            if self.rect.x < 388:
                 if self.rect.x % 2 == 0:
                     self.number += 1
                     self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
-            else:
+            elif self.rect.x > 412:
                 if self.rect.x % 2 == 0:
                     self.number -= 1
                     self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
         else:
-            if self.rect.x > 425:
+            if self.rect.x < 388:
                 if self.rect.x % 2 == 0:
                     self.number -= 1
                     self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
-            else:
+            elif self.rect.x > 412:
                 if self.rect.x % 2 == 0:
                     self.number += 1
                     self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
-        self.ball_size_protector()
+
 
     def ball_size_protector(self):
-        # if self.rect.x < 25:
         if self.surf.get_height() < 25:
-            self.surf = pygame.transform.scale(self.surf, (25, 25))
-        if self.surf.get_height() > 120:
-            self.surf = pygame.transform.scale(self.surf, (120, 120))
+            self.number = 25
+        if self.surf.get_height() > 70:
+            self.number = 70
+        self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
 
     def Rand(self, start, end, num):
         self.colour = []

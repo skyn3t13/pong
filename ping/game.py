@@ -89,6 +89,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
         if self.ball.rect.colliderect(self.right_bat):
             self.ball.reverse_horizontal_direction()
             self.ball.turn_3d_on()
+
     def check_ball_hits_bat_angles(self):
         if self.ball.rect.colliderect(self.left_bat):
             self.ball.rect.x = 11
@@ -199,9 +200,13 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.check_if_ball_angles_on()
             self.turn_angles_on_or_off()
             self.turn_npc_on_or_off()
-            # print(self.ball.rect.x)
-            # print(self.ball.speed[0])
-            # print(self.ball.rect.x)
+            print('Ball Number')
+            print(self.ball.number)
+            print('Ball Rect X')
+            print(self.ball.rect.x)
+            print('Ball Speed')
+            print(self.ball.speed[0])
+            print('Ball Height')
             print(self.ball.surf.get_height())
             self.screen.blit(self.print_npc_status(), (30, 30))
             self.screen.blit(self.print_bounce_status(), (665, 30))
