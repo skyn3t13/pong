@@ -1,10 +1,9 @@
 import random
-import math
 import pygame
 
 
 
-class Ball(pygame.sprite.Sprite):
+class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attributes
     def __init__(self, x_middle, y_middle):
         super(Ball, self).__init__()
         self.surf = pygame.Surface((25, 25))  # pylint: disable=too-many-function-args
@@ -122,9 +121,9 @@ class Ball(pygame.sprite.Sprite):
             self.number = 70
         self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
 
-    def Rand(self, start, end, num):
+    def Rand(self, start, end, num):  #pylint: disable=invalid-name
         self.colour = []
-        for j in range(num):
+        for j in range(num):  #pylint: disable=unused-variable
             self.colour.append(random.randint(start, end))
         return self.colour
 

@@ -52,13 +52,12 @@ class Game:  # pylint: disable=too-many-instance-attributes
         self.background = pygame.Surface(self.screen.get_size())  # pylint: disable=too-many-function-args
         self.games = 1
         self.epsilon = 1
-        # self.ball.Rand()
         self.old_score = {"p1": 0, "p2": 0}
         self.score = {"p1": 0, "p2": 0}
         self.rect = self.rect = self.screen.get_rect()
         self.npc_on = False
         self.ball_angles_on = False
-        # self.robotron3000 = Ai(self)
+        self.robotron3000 = Ai(self)
         self.level = 1
 
 
@@ -109,7 +108,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
         if keys_pressed[self.npc_controller.key_down]:
             self.npc_on = False
 
-
     def moves_npc_player(self):
         chance = random.randint(1, 9999)
         if chance > 3450:
@@ -117,13 +115,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
                 self.left_bat.move_up(Game.BAT_MOVE)
             if self.left_bat.rect.y < self.ball.rect.y:
                 self.left_bat.move_down(Game.BAT_MOVE)
-
-    def turn_npc_on_or_off(self):
-        keys_pressed = pygame.key.get_pressed()
-        if keys_pressed[self.npc_controller.key_up]:
-            self.npc_on = True
-        if keys_pressed[self.npc_controller.key_down]:
-            self.npc_on = False
 
     def turn_angles_on_or_off(self):
         keys_pressed = pygame.key.get_pressed()
@@ -181,13 +172,13 @@ class Game:  # pylint: disable=too-many-instance-attributes
             for event in pygame.event.get():
                 if event.type == KEYDOWN:  # pylint: disable=undefined-variable
                     if event.key == K_ESCAPE:  # pylint: disable=undefined-variable
-                        # self.robotron3000.model.save('test.h5')
+                        self.robotron3000.model.save('test.h5')
                         self.running = False
             if self.ball.reset:
                 self.ball.reset_ball()
             self.screen.fill((0, 0, 0))
             self.clock.tick(60)
-            # self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
+            self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update(self.score)
             self.screen.blit(self.background, (0, 0))
@@ -213,9 +204,9 @@ class Game:  # pylint: disable=too-many-instance-attributes
             if self.npc_on:
                 self.moves_npc_player()
             self.print_npc_status()
-            # print(self.prepare_data(self.output_data()))
-            # self.robotron3000.update_state(self.prepare_data(self.output_data()))
-            # self.update_epsilon()
+            print(self.prepare_data(self.output_data()))
+            self.robotron3000.update_state(self.prepare_data(self.output_data()))
+            self.update_epsilon()
             pygame.display.flip()
 
 if __name__ == "__main__":
