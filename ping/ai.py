@@ -13,7 +13,7 @@ class Ai:
         self.gamma = 0.9
         self.game_over = 0
         self.model = Sequential()
-        self.model.add(Dense(200, init='lecun_uniform', input_shape=(4,)))
+        self.model.add(Dense(150, init='lecun_uniform', input_shape=(3,)))
         self.model.add(Activation('relu'))
         self.model.add(Dense(168, init='lecun_uniform'))
         self.model.add(Activation('relu'))
@@ -26,7 +26,7 @@ class Ai:
 
     def receive_state(self, state, epsilon):
         # Set up qval by adding current state to the model
-        self.qval = self.model.predict(state.reshape(1, 4), batch_size=1)
+        self.qval = self.model.predict(state.reshape(1, 3), batch_size=1)
         # We set an epsilon - an ever decreasing number
         # If a random number is less than the epsilon we do a random action
         # If greater we use the qval to decide the action
@@ -38,6 +38,7 @@ class Ai:
             self.action = (np.argmax(self.qval))
         # Take an action now based on the above
         self.take_action(self.action)
+        print(f"Qval is {self.qval}")
 
 
     def update_state(self, state):
@@ -62,8 +63,10 @@ class Ai:
         # Makes the qval based on the reward
         y_val[0][self.action] = update
         # Update the model based on this
-        self.model.fit(state.reshape(1, 4), y_val, batch_size=1, nb_epoch=1, verbose=1)
-        print(f"Qval is {self.qval}")
+        self.model.fit(state.reshape(1, 3), y_val, batch_size=10, nb_epoch=1, verbose=1)
+        print(f"Yval is {y_val}")
+        print(update)
+        print('-' * 50)
 
     def take_action(self, action):
         if action == 0:

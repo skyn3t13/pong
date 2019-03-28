@@ -97,9 +97,14 @@ class Game:  # pylint: disable=too-many-instance-attributes
 
     def check_ball_hits_bat_no_angles(self):
         if self.ball.rect.colliderect(self.left_bat):
-            self.ball.reverse_horizontal_direction()
+            self.ball.rect.x = 11
+            self.ball.set_random_angle()
+            self.ball.angle_limiter(2)
+
         if self.ball.rect.colliderect(self.right_bat):
-            self.ball.reverse_horizontal_direction()
+            self.ball.rect.x = 764
+            self.ball.set_random_angle()
+            self.ball.angle_limiter(-2)
 
     def turns_on_ball_3d(self):
         if self.ball.rect.colliderect(self.right_bat):
@@ -135,28 +140,27 @@ class Game:  # pylint: disable=too-many-instance-attributes
         return self.npc_font.render(str('Angles Off'), False, Game.ANGLE_OFF_COLOUR, (0, 0, 0))
 
     def output_data(self):
-        output = {"l": self.left_bat.rect.y,
-                  "r": self.right_bat.rect.y,
+        output = {"r": self.right_bat.rect.y,
                   "bx": self.ball.rect.x,
                   "by": self.ball.rect.y,
                   "score": self.score}
         return output
 
     def prepare_data(self, data_hash):
-        array = list(data_hash.values())[:4]
+        array = list(data_hash.values())[:3]
         numpy_array = np.array(array)
         return numpy_array
 
     def update_epsilon(self):
         if self.epsilon > 0.1:
-            self.epsilon -= 0.001
+            self.epsilon -= 0.00001
 
     def get_reward(self):
         if self.score['p1'] - self.old_score['p1'] > 0:
-            reward = -1000
+            reward = -700
             self.old_score = dict(self.score)
-        elif self.score['p2'] - self.old_score['p2'] > 0:
-            reward = 1000
+        elif self.ball.rect.colliderect(self.right_bat):
+            reward = 700
             self.old_score = dict(self.score)
         else:
             reward = 0
@@ -176,7 +180,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
             if self.ball.reset:
                 self.ball.reset_ball()
             self.screen.fill((0, 0, 0))
-            self.clock.tick(60)
+            self.clock.tick()
             self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update(self.score)

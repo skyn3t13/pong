@@ -2,8 +2,10 @@ import random
 import pygame
 
 
+class Ball(pygame.sprite.Sprite):
 
-class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attributes, too-many-public-methods
+    SPEED_LIMIT = 8
+
     def __init__(self, x_middle, y_middle):
         super(Ball, self).__init__()
         self.number = 25
@@ -50,9 +52,6 @@ class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attribute
 
     def reverse_vertical_direction(self):
         self.speed = (self.speed[0], self.speed[1] * -1)
-
-    def reverse_horizontal_direction(self):
-        self.speed = (self.speed[0] * -1, self.speed[1])
 
     def stop_ball(self):
         self.set_ball_speed(0, 0)
@@ -144,14 +143,30 @@ class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attribute
 
     def set_random_angle(self):
         speed_y = self.random_y()
+<<<<<<< HEAD
         if not self.checks_if_positive(self.speed[0]):
             self.speed = (((10 - abs(speed_y))), speed_y)
         else:
             self.speed = (((10 - abs(speed_y)) * -1), speed_y)
 
     def angle_limiter(self, x_speed):
-        if abs(self.speed[1]) > 8:
-            self.speed = (x_speed, 8)
+        if abs(self.speed[1]) > self.SPEED_LIMIT:
+            self.speed = (x_speed, self.SPEED_LIMIT)
 
     def checks_if_positive(self, value):
         return bool(value > 0)
+
+    def starting_player(self):
+        return random.choice([-10, 10])
+=======
+        if self.speed[0] < 0:
+            self.speed = (((10 - abs(speed_y))), speed_y)
+        elif self.speed[0] > 0:
+            self.speed = (((10 - abs(speed_y)) * -1), speed_y)
+
+    def angle_limiter(self, x_speed):
+        if abs(self.speed[1]) > self.SPEED_LIMIT:
+            self.speed = (x_speed, self.SPEED_LIMIT)
+
+
+>>>>>>> origin
