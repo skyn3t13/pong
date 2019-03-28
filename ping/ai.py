@@ -22,7 +22,7 @@ class Ai:
         self.rms = RMSprop()
         self.model.compile(loss='mse', optimizer=self.rms)
         self.qval = None
-        self.action = None   
+        self.action = None
 
     def receive_state(self, state, epsilon):
         # Set up qval by adding current state to the model
