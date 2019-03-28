@@ -48,6 +48,9 @@ class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attribute
     def turn_3d_on(self):
         self.three_d_turned_on = True
 
+    def turn_3d_off(self):
+        self.three_d_turned_on = False
+
     def reverse_vertical_direction(self):
         self.speed = (self.speed[0], self.speed[1] * -1)
         self.change_colour()
@@ -65,7 +68,7 @@ class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attribute
     def reset_ball(self):
         self.set_ball_speed(self.starting_player(), 0)
         self.number = 25
-        self.surf = pygame.transform.scale(self.surf, (25, 25))
+        self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
         # self.set_ball_speed(-10, 0)
         # self.set_ball_speed(10, 0)
         self.rect.y = self.y_middle
@@ -109,15 +112,19 @@ class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attribute
                     self.number -= 1
                     self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
             elif self.rect.x > 412:
+                print('TESTING THIS')
+                print(self.rect.x)
                 if self.rect.x % 2 == 0:
                     self.number += 1
                     self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
 
 
     def ball_size_protector(self):
-        if self.surf.get_height() < 25:
+        # if self.surf.get_height() < 25:
+        if self.number < 25:
             self.number = 25
-        if self.surf.get_height() > 70:
+        if self.number > 70:
+        # if self.surf.get_height() > 70:
             self.number = 70
         self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
 
