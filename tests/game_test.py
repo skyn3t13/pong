@@ -1,6 +1,6 @@
+import random
 import numpy as np
 from ping.game import Game
-import random
 
 
 def test_screen_is_rendered():
@@ -23,8 +23,7 @@ def test_ball_moves_from_starting_position():
 
 def test_output_data():
     game = Game()
-    assert game.output_data() == {'l': 300,
-                                  'r': 300,
+    assert game.output_data() == {'r': 300,
                                   'bx': 400,
                                   'by': 300,
                                   'score': {'p1': 0, 'p2': 0}}
@@ -33,7 +32,7 @@ def test_output_data():
 def test_prepare_data():
     game = Game()
     numpy_array = game.prepare_data(game.output_data())
-    assert np.array_equal(numpy_array, [300, 300, 400, 300])
+    assert np.array_equal(numpy_array, [300, 400, 300])
 
 def test_game_score():
     game = Game()
