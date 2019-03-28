@@ -72,9 +72,14 @@ class Game:  # pylint: disable=too-many-instance-attributes
 
     def check_ball_hits_bat(self):
         if self.ball.rect.colliderect(self.left_bat):
-            self.ball.reverse_horizontal_direction()
+            self.ball.rect.x = 11
+            self.ball.set_random_angle()
+            self.ball.angle_limiter(2)
+
         if self.ball.rect.colliderect(self.right_bat):
-            self.ball.reverse_horizontal_direction()
+            self.ball.rect.x = 764
+            self.ball.set_random_angle()
+            self.ball.angle_limiter(-2)
 
     def moves_npc_player(self):
         chance = random.randint(1, 9999)
