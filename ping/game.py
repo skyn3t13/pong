@@ -44,27 +44,21 @@ class Game:  # pylint: disable=too-many-instance-attributes
                              Game.RIGHT_BAT_X_POSITION,
                              Game.Y_MIDDLE_SCREEN)
         self.right_player = Player(pygame.K_UP, pygame.K_DOWN)  # pylint: disable=no-member
-        self.npc_controller = Player(pygame.K_d, pygame.K_f)
-        self.angle_controller = Player(pygame.K_e, pygame.K_r)
-
+        self.npc_controller = Player(pygame.K_n, pygame.K_m)
+        self.angle_controller = Player(pygame.K_a, pygame.K_z)
         self.npc_on = False
         self.ball_angles_on = False
-
         self.ball = ball
         self.ball.rect.y = Game.Y_MIDDLE_SCREEN
         self.ball.rect.x = Game.X_MIDDLE_SCREEN
         self.background = pygame.Surface(self.screen.get_size())  # pylint: disable=too-many-function-args
         self.games = 1
-        # self.epsilon = 1
+        self.epsilon = 1
         self.old_score = {"p1": 0, "p2": 0}
         self.score = {"p1": 0, "p2": 0}
         self.rect = self.rect = self.screen.get_rect()
-
-        # self.robotron3000 = Ai(self)
+        self.robotron3000 = Ai(self)
         self.level = 1
-
-
-
 
     def check_bat_move(self):
         keys_pressed = pygame.key.get_pressed()
@@ -96,22 +90,22 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.ball.rect.x = 20
             self.ball.set_random_angle()
             self.ball.angle_limiter(2)
-            self.ball.turn_3d_on()
         if self.ball.rect.colliderect(self.right_bat):
             self.ball.rect.x = 760
             self.ball.set_random_angle()
             self.ball.angle_limiter(-2)
-            self.ball.turn_3d_on()
-
 
     def check_ball_hits_bat_no_angles(self):
         if self.ball.rect.colliderect(self.left_bat):
             self.ball.reverse_horizontal_direction()
-            self.ball.turn_3d_on()
         if self.ball.rect.colliderect(self.right_bat):
             self.ball.reverse_horizontal_direction()
-            self.ball.turn_3d_on()
 
+    def turns_on_ball_3d(self):
+        if self.ball.rect.colliderect(self.right_bat):
+            self.ball.turn_3d_on()
+        if self.ball.rect.colliderect(self.left_bat):
+            self.ball.turn_3d_on()
 
 
     def turn_npc_on_or_off(self):
@@ -153,8 +147,6 @@ class Game:  # pylint: disable=too-many-instance-attributes
         numpy_array = np.array(array)
         return numpy_array
 
-
-
     def update_epsilon(self):
         if self.epsilon > 0.1:
             self.epsilon -= 0.001
@@ -179,13 +171,13 @@ class Game:  # pylint: disable=too-many-instance-attributes
             for event in pygame.event.get():
                 if event.type == KEYDOWN:  # pylint: disable=undefined-variable
                     if event.key == K_ESCAPE:  # pylint: disable=undefined-variable
-                        # self.robotron3000.model.save('test.h5')
+                        self.robotron3000.model.save('test.h5')
                         self.running = False
             if self.ball.reset:
                 self.ball.reset_ball()
             self.screen.fill((0, 0, 0))
             self.clock.tick(60)
-            # self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
+            self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update(self.score)
             self.screen.blit(self.background, (0, 0))
@@ -198,23 +190,18 @@ class Game:  # pylint: disable=too-many-instance-attributes
             self.check_if_ball_angles_on()
             self.turn_angles_on_or_off()
             self.turn_npc_on_or_off()
-            # print('Ball Number')
-            # print(self.ball.number)
-            # print('Ball Rect X')
-            # print(self.ball.rect.x)
-            # print('Ball Speed')
-            # print(self.ball.speed[0])
-            # print('Ball Height')
-            # print(self.ball.surf.get_height())
+            self.turns_on_ball_3d()
+
             self.screen.blit(self.print_npc_status(), (30, 30))
             self.screen.blit(self.print_angle_status(), (665, 30))
-
             if self.npc_on:
                 self.moves_npc_player()
             self.print_npc_status()
-            # print(self.prepare_data(self.output_data()))
-            # self.robotron3000.update_state(self.prepare_data(self.output_data()))
-            # self.update_epsilon()
+            print(self.prepare_data(self.output_data()))
+            self.robotron3000.update_state(self.prepare_data(self.output_data()))
+            self.update_epsilon()
+            print(self.epsilon)
+            print(self.output_data())
             pygame.display.flip()
 
 if __name__ == "__main__":

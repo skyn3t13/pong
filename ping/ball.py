@@ -3,7 +3,7 @@ import pygame
 
 
 
-class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attributes
+class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attributes, too-many-public-methods
     def __init__(self, x_middle, y_middle):
         super(Ball, self).__init__()
         self.number = 25
@@ -95,21 +95,21 @@ class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attribute
             self.ball_leftward_adjustment()
 
     def ball_rightward_adjustment(self):
-        if self.rect.x < 388:
+        if self.rect.x < 380:
             if self.divisible_by_two():
                 self.increment_number()
                 self.adjust_ball_size()
-        elif self.rect.x > 412:
+        elif self.rect.x > 420:
             if self.divisible_by_two():
                 self.decrease_number()
                 self.adjust_ball_size()
 
     def ball_leftward_adjustment(self):
-        if self.rect.x < 388:
+        if self.rect.x < 380:
             if self.divisible_by_two():
                 self.decrease_number()
                 self.adjust_ball_size()
-        elif self.rect.x > 412:
+        elif self.rect.x > 420:
             if self.divisible_by_two():
                 self.increment_number()
                 self.adjust_ball_size()
@@ -121,7 +121,7 @@ class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attribute
         self.number -= 1
 
     def divisible_by_two(self):
-        return(bool(self.rect.x % 2 == 0))
+        return bool(self.rect.x % 2 == 0)
 
     def adjust_ball_size(self):
         self.surf = pygame.transform.scale(self.surf, (self.number, self.number))
@@ -129,8 +129,8 @@ class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attribute
     def ball_size_protector(self):
         if self.number < 25:
             self.number = 25
-        if self.number > 70:
-            self.number = 70
+        if self.number > 75:
+            self.number = 75
         self.adjust_ball_size()
 
     def Rand(self, start, end, num):  #pylint: disable=invalid-name
@@ -149,10 +149,9 @@ class Ball(pygame.sprite.Sprite):  # pylint: disable=too-many-instance-attribute
         else:
             self.speed = (((10 - abs(speed_y)) * -1), speed_y)
 
-
-    def checks_if_positive(self, value):
-        return (bool(value > 0))
-
     def angle_limiter(self, x_speed):
         if abs(self.speed[1]) > 8:
             self.speed = (x_speed, 8)
+
+    def checks_if_positive(self, value):
+        return bool(value > 0)
