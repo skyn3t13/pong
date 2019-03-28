@@ -3,6 +3,9 @@ import pygame
 
 
 class Ball(pygame.sprite.Sprite):
+
+    SPEED_LIMIT = 8
+
     def __init__(self, x_middle, y_middle):
         super(Ball, self).__init__()
         self.surf = pygame.Surface((25, 25))  # pylint: disable=too-many-function-args
@@ -75,8 +78,8 @@ class Ball(pygame.sprite.Sprite):
             self.speed = (((10 - abs(speed_y)) * -1), speed_y)
 
     def angle_limiter(self, x_speed):
-        if abs(self.speed[1]) > 8:
-            self.speed = (x_speed, 8)
+        if abs(self.speed[1]) > self.SPEED_LIMIT:
+            self.speed = (x_speed, self.SPEED_LIMIT)
 
     def starting_player(self):
         return random.choice([-10, 10])
