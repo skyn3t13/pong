@@ -1,6 +1,6 @@
-import pygame
 import random
-import math
+import pygame
+
 
 class Ball(pygame.sprite.Sprite):
     def __init__(self, x_middle, y_middle):
