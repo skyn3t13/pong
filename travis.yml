@@ -1,5 +1,0 @@
- language: python
-
-  script:
-    - pytest
-    - pylint ping/*
