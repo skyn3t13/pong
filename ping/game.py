@@ -136,13 +136,13 @@ class Game:  # pylint: disable=too-many-instance-attributes
             for event in pygame.event.get():
                 if event.type == KEYDOWN:  # pylint: disable=undefined-variable
                     if event.key == K_ESCAPE:  # pylint: disable=undefined-variable
-                        self.robotron3000.model.save('test.h5')
+                        # self.robotron3000.model.save('test.h5')
                         self.running = False
             if self.ball.reset:
                 self.ball.reset_ball()
             self.screen.fill((0, 0, 0))
             self.clock.tick()
-            self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
+            # self.robotron3000.receive_state(self.prepare_data(self.output_data()), self.epsilon)
             self.ball.rect.move_ip(self.ball.speed)
             self.ball.update(self.score)
             self.screen.blit(self.background, (0, 0))
@@ -159,8 +159,8 @@ class Game:  # pylint: disable=too-many-instance-attributes
                 self.moves_npc_player()
             self.print_npc_status()
             print(self.prepare_data(self.output_data()))
-            self.robotron3000.update_state(self.prepare_data(self.output_data()))
-            self.update_epsilon()
+            # self.robotron3000.update_state(self.prepare_data(self.output_data()))
+            # self.update_epsilon()
             print(self.epsilon)
             print(self.output_data())
             pygame.display.flip()
