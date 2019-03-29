@@ -2,7 +2,7 @@ import random
 import pygame
 
 
-class Ball(pygame.sprite.Sprite):
+class Ball(pygame.sprite.Sprite):  #pylint: disable=too-many-instance-attributes, too-many-public-methods
 
     SPEED_LIMIT = 8
 
@@ -143,7 +143,6 @@ class Ball(pygame.sprite.Sprite):
 
     def set_random_angle(self):
         speed_y = self.random_y()
-<<<<<<< HEAD
         if not self.checks_if_positive(self.speed[0]):
             self.speed = (((10 - abs(speed_y))), speed_y)
         else:
@@ -155,18 +154,3 @@ class Ball(pygame.sprite.Sprite):
 
     def checks_if_positive(self, value):
         return bool(value > 0)
-
-    def starting_player(self):
-        return random.choice([-10, 10])
-=======
-        if self.speed[0] < 0:
-            self.speed = (((10 - abs(speed_y))), speed_y)
-        elif self.speed[0] > 0:
-            self.speed = (((10 - abs(speed_y)) * -1), speed_y)
-
-    def angle_limiter(self, x_speed):
-        if abs(self.speed[1]) > self.SPEED_LIMIT:
-            self.speed = (x_speed, self.SPEED_LIMIT)
-
-
->>>>>>> origin
