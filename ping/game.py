@@ -22,7 +22,7 @@ class Game:  # pylint: disable=too-many-instance-attributes
     NPC_OFF_COLOUR = [255, 0, 0]
 
 
-    def __init__(self, ball=Ball(Y_MIDDLE_SCREEN, X_MIDDLE_SCREEN)):
+    def __init__(self, ball=Ball(X_MIDDLE_SCREEN, Y_MIDDLE_SCREEN)):
 
         pygame.init()  # pylint: disable=E1101
         self.font = pygame.font.SysFont("monospace", 35)
